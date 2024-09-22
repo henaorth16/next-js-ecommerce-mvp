@@ -1,34 +1,34 @@
-import { NextRequest, NextResponse } from "next/server"
-import { isValidPassword } from "./lib/isValidPassword"
+import { NextRequest, NextResponse } from 'next/server';
+import * as jose from 'jose';
 
-export async function middleware(req: NextRequest) {
-  if ((await isAuthenticated(req)) === false) {
-    return new NextResponse("Unauthorized", {
-      status: 401,
-      headers: { "WWW-Authenticate": "Basic" },
-    })
+export async function middleware(request: NextRequest) {
+  const token = request.cookies.get('Authorization')?.value;
+
+  if (!token) {
+    // If there's no token, redirect to login page
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  try {
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+
+    // Verify the token
+    await jose.jwtVerify(token, secret, {
+      algorithms: ['HS512'],
+    });
+   console.log("token");
+   
+    // If token is valid, allow the request to proceed
+    return NextResponse.next();
+  } catch (error) {
+    console.error('JWT verification failed:', error);
+
+    // If token verification fails, redirect to login page
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 }
 
-async function isAuthenticated(req: NextRequest) {
-  const authHeader =
-    req.headers.get("authorization") || req.headers.get("Authorization")
-
-  if (authHeader == null) return false
-
-  const [username, password] = Buffer.from(authHeader.split(" ")[1], "base64")
-    .toString()
-    .split(":")
-
-  return (
-    username === process.env.ADMIN_USERNAME &&
-    (await isValidPassword(
-      password,
-      process.env.HASHED_ADMIN_PASSWORD as string
-    ))
-  )
-}
-
+// Define the paths where the middleware should run
 export const config = {
-  matcher: "/admin/:path*",
-}
+  matcher: ['/admin/:path*'], // Add more paths as needed
+};
