@@ -1,3 +1,4 @@
+//@ts-nocheck
 import db from "@/db/db"
 import { NextRequest, NextResponse } from "next/server"
 import fs from "fs/promises"

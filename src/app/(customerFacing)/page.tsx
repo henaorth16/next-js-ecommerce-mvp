@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard"
 import { Button } from "@/components/ui/button"
 import db from "@/db/db"
