@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { ReactNode } from "react"
 import { useFormState, useFormStatus } from "react-dom"
 
 export default function MyOrdersPage() {
@@ -34,19 +35,19 @@ export default function MyOrdersPage() {
           </div>
         </CardContent>
         <CardFooter>
-          {data.message ? <p>{data.message}</p> : <SubmitButton />}
+          {data.message ? <p>{data.message}</p> : <SubmitButton waiting="sending..." done="send" />}
         </CardFooter>
       </Card>
     </form>
   )
 }
 
-function SubmitButton() {
+function SubmitButton({waiting, done}: {waiting:ReactNode, done: ReactNode}) {
   const { pending } = useFormStatus()
 
   return (
     <Button className="w-full" size="lg" disabled={pending} type="submit">
-      {pending ? "Sending..." : "Send"}
+      {pending ? waiting : done}
     </Button>
   )
 }
