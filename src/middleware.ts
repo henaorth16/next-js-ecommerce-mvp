@@ -30,5 +30,5 @@ export async function middleware(request: NextRequest) {
 
 // Define the paths where the middleware should run
 export const config = {
-  matcher: ['/admin/:path*'], // Add more paths as needed
+  matcher: ['/admins/:path*'], // Add more paths as needed
 };
