@@ -14,7 +14,7 @@ export async function emailOrderHistory(
 ): Promise<{ message?: string; error?: string }> {
   const result = emailSchema.safeParse(formData.get("email"))
 
-  if (result.success === false) {
+  if (!result.success) {
     return { error: "Invalid email address" }
   }
 
@@ -43,7 +43,7 @@ export async function emailOrderHistory(
   if (user == null) {
     return {
       message:
-        "Check your email to view your order history and download your products.",
+        `no user registered with ${result.data}`,
     }
   }
 

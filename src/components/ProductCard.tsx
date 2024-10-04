@@ -27,23 +27,27 @@ export function ProductCard({
   imagePath,
 }: ProductCardProps) {
   return (
-    <Card className="flex overflow-hidden flex-col">
-      <div className="relative w-full h-auto aspect-video">
-        <Image className="object-cover blur-sm" src={imagePath} fill alt={name} />
-        <Image className="object-contain" src={imagePath} fill alt={name} />
+    <Card className="flex overflow-hidden h-auto w-4/5 mx-auto flex-col">
+      <div className="relative w-full aspect-square overflow-hidden -mb-2">
+        <Link href={`/products/details/${id}`}>
+          <Image className="object-cover blur-sm" src={imagePath} fill alt={name} />
+          <Image className="object-contain hover:scale-110 transition-transform" src={imagePath} fill alt={name} />
+        </Link>
       </div>
-      <CardHeader>
-        <CardTitle>{name}</CardTitle>
-        <CardDescription>{formatCurrency(priceInCents / 100)}</CardDescription>
-      </CardHeader>
-      <CardContent className="flex-grow">
-        <p className="line-clamp-4">{description}</p>
-      </CardContent>
-      <CardFooter>
-        <Button asChild size="lg" className="w-full">
-          <Link href={`/products/${id}/purchase`}>Purchase</Link>
-        </Button>
-      </CardFooter>
+        <CardHeader>
+          <Link className="hover:underline" href={`/products/details/${id}`}>
+            <CardTitle>{name}</CardTitle>
+          </Link>
+          <CardDescription>{formatCurrency(priceInCents / 100)}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex-grow">
+          <p className="line-clamp-4">{description.substring(0, 12)}...</p>
+        </CardContent>
+        <CardFooter>
+          <Button asChild size="lg" className="w-full">
+            <Link href={`/products/${id}/purchase`}>Purchase</Link>
+          </Button>
+        </CardFooter>
     </Card>
   )
 }

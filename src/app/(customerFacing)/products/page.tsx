@@ -11,8 +11,9 @@ const getProducts = cache(() => {
 }, ["/products", "getProducts"])
 
 export default function ProductsPage() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  return <>
+    
+    <div className="my-y-5 md:w-5/6 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <Suspense
         fallback={
           <>
@@ -28,7 +29,8 @@ export default function ProductsPage() {
         <ProductsSuspense />
       </Suspense>
     </div>
-  )
+  </>
+  
 }
 
 async function ProductsSuspense() {

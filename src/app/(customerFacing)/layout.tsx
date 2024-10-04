@@ -1,7 +1,7 @@
 import { Nav, NavLink } from "@/components/Nav"
 import Navigation from "@/components/Navigation"
-
-export const dynamic = "force-dynamic"
+import Footer from "@/components/Footer"
+export const dynamic = "force-dynmic"
 
 export default function Layout({
   children,
@@ -11,7 +11,8 @@ export default function Layout({
   return (
     <>
       <Navigation />
-      <div className="container my-6">{children}</div>
+      <div className="min-h-[calc(100vh-15rem)]">{children}</div>
+      <Footer/>
     </>
   )
 }

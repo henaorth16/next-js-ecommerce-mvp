@@ -1,5 +1,5 @@
 const CURRENCY_FORMATTER = new Intl.NumberFormat("en-US", {
-  currency: "USD",
+  currency: "ETB",
   style: "currency",
   minimumFractionDigits: 0,
 })

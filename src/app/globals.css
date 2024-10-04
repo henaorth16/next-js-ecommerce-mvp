@@ -89,3 +89,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+.animated-text{
+  animation: popup .7s ease-in forwards;
+}
+
+@keyframes popup {
+  from{
+    background-color: red;
+  }
+  to{
+    background-position: black;
+  }
+}
