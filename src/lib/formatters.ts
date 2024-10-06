@@ -1,10 +1,13 @@
+import { redirect } from "next/navigation"
+
 const CURRENCY_FORMATTER = new Intl.NumberFormat("en-US", {
   currency: "ETB",
   style: "currency",
   minimumFractionDigits: 0,
 })
 
-export function formatCurrency(amount: number) {
+export function formatCurrency(amount: any) {
+  if (amount == undefined || NaN) redirect("/")
   return CURRENCY_FORMATTER.format(amount)
 }
 
