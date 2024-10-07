@@ -1,10 +1,17 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Jost, Poppins } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils"
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
+// Assign unique variables to each font
+const jost = Jost({ subsets: ["latin"], variable: "--font-jost" })
+const poppins = Poppins({ 
+  subsets: ["latin"], 
+  variable: "--font-poppins", 
+  display: "swap", 
+  weight: ["400", "500", "700"]  // Include desired font weights here
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,7 +28,8 @@ export default function RootLayout({
       <body
         className={cn(
           "bg-background min-h-screen font-sans antialiased",
-          inter.variable
+          jost.variable,  // Use the Jost font variable
+          poppins.variable  // Use the Poppins font variable
         )}
       >
         {children}

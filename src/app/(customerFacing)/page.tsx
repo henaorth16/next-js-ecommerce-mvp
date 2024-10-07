@@ -8,6 +8,7 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { Suspense } from "react"
 import About from "@/components/About"
+import Hero from "@/components/Hero"
 const getMostPopularProducts = cache(
   () => {
     return db.product.findMany({
@@ -31,12 +32,8 @@ const getNewestProducts = cache(() => {
 export default function HomePage() {
   return (
     <main className="">
-      {/* hero page tobe maintained */}
-      <div className=" h-[75vh] w-full flex items-center pl-12 bg-yellow-900 bg-[url(https://images.unsplash.com/photo-1633980990942-80e0da50977e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aGFiZXNoYW4lMjBkcmVzc3xlbnwwfHwwfHx8MA%3D%3D)] bg-cover bg-no-repeat bg-fixed bg-center bg-blend-overlay">
-        <h1 className="animated-text text-6xl font-extrabold text-transparent bg-gradient-to-tr bg-clip-text from-[#e6e211] to-orange-800">You deserve <br/>the Fashion </h1>
-      </div>
-      
-      <About/>
+      <Hero />
+      <About />
       <ProductGridSection
         title="Most Popular"
         productsFetcher={getMostPopularProducts}
@@ -56,7 +53,7 @@ function ProductGridSection({
   title,
 }: ProductGridSectionProps) {
   return (
-    <div className="space-y-4 mx-auto md:w-5/6">
+    <div className="space-y-4 mx-auto md:w-5/6 px-4">
       <div className="flex gap-4">
         <h2 className="text-3xl font-bold">{title}</h2>
         <Button variant="outline" asChild>
@@ -66,7 +63,7 @@ function ProductGridSection({
           </Link>
         </Button>
       </div>
-      <div className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="w-5/7 mx-auto grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
         <Suspense
           fallback={
             <>

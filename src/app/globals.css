@@ -1,10 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
+
+
 
 @layer base {
   :root {
+    --font-jost: "Jost", sans-serif;
+    --font-poppins: "Poppins", sans-serif;
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -69,15 +73,25 @@
   }
 }
 
-.animated-text{
-  animation: popup .7s ease-in forwards;
+.font-jost {
+  font-family: var(--font-jost);
+}
+
+.font-poppins {
+  font-family: var(--font-poppins);
+}
+.animated-text {
+  animation: popup 1.2s ease-in forwards;
 }
 
 @keyframes popup {
-  from{
-    background-color: red;
+  from {
+    color: rgba(48, 48, 48, 0.021);
   }
-  to{
-    background-position: black;
+  to {
+    color: rgb(255, 255, 255);
   }
 }
+/* .hero{
+  background-position: right 10% top 20%;
+} */
