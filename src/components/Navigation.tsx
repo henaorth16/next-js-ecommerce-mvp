@@ -23,7 +23,7 @@ const links = [
 export default function Navigation() {
   const pathname = usePathname()
   return (
-    <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6 font-jost">
+    <header className="flex h-20 w-full shrink-0 sticky top-0 z-[999] bg-slate-100 items-center px-4 md:px-6 font-jost">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="lg:hidden">
@@ -58,8 +58,8 @@ export default function Navigation() {
             <NavigationMenuLink asChild>
             <Link
               href={item.link}
-              className={`group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none
-                ${pathname === item.link && "font-semibold"}
+              className={`group inline-flex h-9 w-max text-md items-center justify-center rounded-md px-4 py-2 font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none
+                ${pathname === item.link && "font-[800]"}
                 data-[active]:bg-gray-400 data-[state=open]:bg-gray-400`}
               prefetch={false}
             >

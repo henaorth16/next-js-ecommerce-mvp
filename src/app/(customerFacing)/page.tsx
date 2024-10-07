@@ -25,7 +25,7 @@ const getNewestProducts = cache(() => {
   return db.product.findMany({
     where: { isAvailableForPurchase: true },
     orderBy: { createdAt: "desc" },
-    take: 2,
+    take: 4,
   })
 }, ["/", "getNewestProducts"])
 
