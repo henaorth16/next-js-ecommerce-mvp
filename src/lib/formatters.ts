@@ -6,7 +6,7 @@ const CURRENCY_FORMATTER = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 0,
 })
 
-export function formatCurrency(amount: any) {
+export function formatCurrency(amount: number) {
   if (amount == undefined || NaN) redirect("/")
   return CURRENCY_FORMATTER.format(amount)
 }

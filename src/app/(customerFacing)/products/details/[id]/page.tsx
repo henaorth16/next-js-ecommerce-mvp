@@ -1,8 +1,7 @@
-//@ts-nocheck
+
 import React from "react"
 import db from "@/db/db"
 import { formatCurrency } from "@/lib/formatters"
-import { redirect } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import Image from "next/image"
@@ -11,7 +10,23 @@ import { Input } from "@/components/ui/input"
 
 export default async function page({ params: { id } }: { params: { id: string } }) {
   // const id = "65378675"
-  const product = await db.product.findUnique({ where: { id } })
+  const product = await db.product.findUnique({
+    where: {
+      id: id,
+    },
+    select: {
+      id:true,
+      name: true,
+      priceInCents: true,
+      imagePath:true,
+      description: true,
+      isAvailableForPurchase:true,
+    },
+  })
+
+  if (!product) return <p>No Related product found</p>
+
+  // const product = await db.product.findUnique({ where: { id } })
 
   return (
     <>

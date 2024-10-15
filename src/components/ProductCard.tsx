@@ -23,7 +23,6 @@ export function ProductCard({
   id,
   name,
   priceInCents,
-  description,
   imagePath,
 }: ProductCardProps) {
   return (

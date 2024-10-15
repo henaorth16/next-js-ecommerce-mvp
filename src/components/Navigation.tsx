@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { NavigationMenu, NavigationMenuList, NavigationMenuLink } from "@/components/ui/navigation-menu"
 import { usePathname } from "next/navigation"
-import { MountainSnow, MountainSnowIcon, SunIcon } from "lucide-react"
+import { MountainSnow, MountainSnowIcon } from "lucide-react"
+import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs"
 
 const links = [
   {
@@ -21,9 +22,10 @@ const links = [
   },
 ]
 export default function Navigation() {
+  const { isSignedIn, user, isLoaded } = useUser()
   const pathname = usePathname()
   return (
-    <header className="flex h-20 w-full shrink-0 sticky top-0 z-[999] bg-slate-100 items-center px-4 md:px-6 font-jost">
+    <header className="flex h-20 w-full shrink-0 sticky top-0 z-[999] bg-slate-100 items-center px-4 md:px-6 font-jost justify-between">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="lg:hidden">
@@ -39,41 +41,54 @@ export default function Navigation() {
           </Link>
 
           <div className="grid gap-2 py-6">
-          {links.map((item, idx) => (
-            <Link href={item.link} className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
-              {item.title}
-            </Link>
-          ))}
+            {links.map((item, idx) => (
+              <Link href={item.link} key={idx} className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
+                {item.title}
+              </Link>
+            ))}
           </div>
         </SheetContent>
       </Sheet>
-      <Link href="/" className="mr-6 hidden lg:flex" prefetch={false}>
-        <MountainSnow className="h-6 w-6" />
-        <span className="sr-only">Acme Inc</span>
-      </Link>
       <NavigationMenu className="hidden lg:flex">
+        <Link href="/" className="mr-6 hidden lg:flex" prefetch={false}>
+          <MountainSnow className="h-6 w-6" />
+          <span className="sr-only">Acme Inc</span>
+        </Link>
 
         <NavigationMenuList>
           {links.map((item, idx) => (
-            <NavigationMenuLink asChild>
-            <Link
-              href={item.link}
-              className={`group inline-flex h-9 w-max text-md items-center justify-center rounded-md px-4 py-2 font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none
+            <NavigationMenuLink asChild key={idx}>
+              <Link
+                href={item.link}
+                className={`group inline-flex h-9 w-max text-md items-center justify-center rounded-md px-4 py-2 font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none
                 ${pathname === item.link && "font-[800]"}
                 data-[active]:bg-gray-400 data-[state=open]:bg-gray-400`}
-              prefetch={false}
-            >
-              {item.title}
-            </Link>
-          </NavigationMenuLink>
+                prefetch={false}
+              >
+                {item.title}
+              </Link>
+            </NavigationMenuLink>
           ))}
         </NavigationMenuList>
+
       </NavigationMenu>
+      {isSignedIn ? (
+        <div className="flex">
+          <p>Hi {user.firstName}</p>
+          {isLoaded && <UserButton />}
+        </div>
+      ) : (
+        <div className="flex gap-3">
+          <Button><SignInButton /></Button>
+          <Button><SignUpButton /></Button>
+        </div>
+      )}
+
     </header>
   )
 }
 
-function MenuIcon(props) {
+function MenuIcon(props: any) {
   return (
     <svg
       {...props}

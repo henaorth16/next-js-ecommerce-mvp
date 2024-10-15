@@ -3,13 +3,13 @@ import { Jost, Poppins } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils"
-
+import {ClerkProvider} from "@clerk/nextjs"
 // Assign unique variables to each font
 const jost = Jost({ subsets: ["latin"], variable: "--font-jost" })
-const poppins = Poppins({ 
-  subsets: ["latin"], 
-  variable: "--font-poppins", 
-  display: "swap", 
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  display: "swap",
   weight: ["400", "500", "700"]  // Include desired font weights here
 })
 
@@ -24,17 +24,19 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={cn(
-          "bg-background min-h-screen font-sans antialiased",
-          jost.variable,  // Use the Jost font variable
-          poppins.variable  // Use the Poppins font variable
-        )}
-      >
-        {children}
-        <Toaster /> 
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={cn(
+            "bg-background min-h-screen font-sans antialiased",
+            jost.variable,  // Use the Jost font variable
+            poppins.variable  // Use the Poppins font variable
+          )}
+        >
+          {children}
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

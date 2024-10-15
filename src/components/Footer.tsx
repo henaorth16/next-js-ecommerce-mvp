@@ -1,3 +1,4 @@
+import { AlignVerticalJustifyEndIcon, Facebook, FacebookIcon, GamepadIcon, InstagramIcon, LucideTableCellsMerge, Underline } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
@@ -10,12 +11,11 @@ export default function Footer() {
          <a href="#">Products</a>
          <a href="#">Contact</a>
       </div>
-      <div className="contact flex flex-col">
-         <a href="#">Facebook</a>
-         <a href="#">Telegram</a>
-         <a href="#">Instagram</a>
-         <a href="#">Email</a>
-      </div>
+      <ul className="contact flex flex-col gap-2">
+         <li><a href="#"><FacebookIcon/></a></li>
+         <li><a href="#"><InstagramIcon/></a></li>
+         <li><a href="#"><Underline/></a></li>
+      </ul>
     </footer>
   )
 }
