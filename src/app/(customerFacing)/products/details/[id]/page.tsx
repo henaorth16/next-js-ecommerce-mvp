@@ -11,18 +11,20 @@ import { Input } from "@/components/ui/input"
 export default async function page({ params: { id } }: { params: { id: string } }) {
   // const id = "65378675"
   const product = await db.product.findUnique({
-    where: {
-      id: id,
-    },
+    where: { id: id },
     select: {
-      id:true,
+      id: true,
       name: true,
       priceInCents: true,
-      imagePath:true,
+      imagePath: true,
       description: true,
-      isAvailableForPurchase:true,
+      isAvailableForPurchase: true,
     },
   })
+  
+  if (!product) {
+    throw new Error("Product not found");
+  }
 
   if (!product) return <p>No Related product found</p>
 
