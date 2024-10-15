@@ -60,6 +60,8 @@ export async function addProduct(prevState: unknown, formData: FormData) {
     throw new Error(`Image upload error: ${error.message}`)
   }
 
+  const { secure_url } = imageUploadResult as { secure_url: string };
+
   // Handle the file upload locally (or to another cloud storage if necessary)
   await fs.mkdir("products", { recursive: true })
   const filePath = `products/${crypto.randomUUID()}-${data.file.name}`
@@ -73,7 +75,7 @@ export async function addProduct(prevState: unknown, formData: FormData) {
       description: data.description,
       priceInCents: data.priceInCents,
       filePath, // Local or alternative file storage
-      imagePath: imageUploadResult.secure_url, // Cloudinary image URL
+      imagePath: secure_url, // Cloudinary image URL
     },
   })
 
