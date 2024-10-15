@@ -8,7 +8,7 @@ import { ComponentProps, ReactNode } from "react"
 
 export function Nav({ children }: { children: ReactNode }) {
   return (
-    <nav className="grid gap-2 py-6 text-primary-foreground">
+    <nav className="flex gap-2 justify-center py-6 text-primary-foreground">
       {children}
     </nav>
   )
@@ -20,7 +20,7 @@ export function NavLink(props: Omit<ComponentProps<typeof Link>, "className">) {
     <Link
       {...props}
       className={cn(
-        "flex w-full items-center py-2 text-lg font-semibold",
+        "text-black py-2 text-lg font-semibold",
         pathname === props.href && "border-0 border-b-4 border-muted-primary"
       )}
     />
