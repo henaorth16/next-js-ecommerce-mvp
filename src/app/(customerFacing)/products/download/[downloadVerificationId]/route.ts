@@ -12,7 +12,7 @@ export async function GET(
   // Fetch the product details and check if the download link is still valid
   const data = await db.downloadVerification.findUnique({
     where: { id: downloadVerificationId, expiresAt: { gt: new Date() } },
-    select: { product: { select: { filePath: true, name: true } } },
+    select: { product: { select: { imagePath: true, name: true } } },
   })
 
   // If no valid data is found, redirect to the expired download page
@@ -20,7 +20,7 @@ export async function GET(
     return NextResponse.redirect(new URL("/products/download/expired", req.url))
   }
 
-  const fileUrl = data.product.filePath // Assuming this is the Cloudinary URL stored in your DB
+  const fileUrl = data.product.imagePath // Assuming this is the Cloudinary URL stored in your DB
   const extension = fileUrl.split(".").pop()
 
   // Optionally, you can fetch metadata from Cloudinary to get file size or other info
