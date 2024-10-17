@@ -13,7 +13,7 @@ const getProducts = cache(() => {
 export default function ProductsPage() {
   return <>
     
-    <div className="my-y-5 md:w-5/6 mx-auto grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+    <div className="my-y-5 md:w-5/6 mx-auto grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
       <Suspense
         fallback={
           <>

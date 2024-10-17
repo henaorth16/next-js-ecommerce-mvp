@@ -29,9 +29,9 @@ export function ProductCard({
     <div className="w-full">
       <Card className="flex overflow-hidden h-auto mx-auto flex-col rounded-sm">
         <div className="relative w-full aspect-[5/6] overflow-hidden -mb-2">
-          <Link href={`/products/details/${id}`}>
+          <a href={`/products/details/${id}`}>
             <Image className="object-contain hover:scale-110 transition-transform" src={imagePath} width={500} height={700} alt={name} />
-          </Link>
+          </a>
         </div>
         <CardHeader>
           <Link className="hover:underline" href={`/products/details/${id}`}>
