@@ -24,8 +24,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider>
+    // <ClerkProvider>
       <html lang="en">
+        <head>
+          <link rel="shortcut icon" href="public\fav.ico" type="image/x-icon" />
+        </head>
         <body
           className={cn(
             "bg-background min-h-screen font-sans antialiased",
@@ -37,6 +40,6 @@ export default function RootLayout({
           <Toaster />
         </body>
       </html>
-    </ClerkProvider>
+    // </ClerkProvider>
   )
 }

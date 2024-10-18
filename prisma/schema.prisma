@@ -36,7 +36,6 @@ model Order {
   pricePaidInCents Int
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
-
   userId    String
   productId String
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)

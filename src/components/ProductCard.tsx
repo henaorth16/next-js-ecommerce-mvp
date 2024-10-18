@@ -41,7 +41,7 @@ export function ProductCard({
         </CardHeader>
         <CardFooter>
           <Button asChild size="lg" className="w-full">
-            <Link href={`/products/${id}/purchase`}>Purchase</Link>
+            <Link href={`/checkout`}>Purchase</Link>
           </Button>
         </CardFooter>
       </Card>
