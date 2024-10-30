@@ -3,8 +3,13 @@ import axios from "axios";
 
 export async function POST(req: NextRequest) {
   try {
-    // Parse the body from the request
-    const { tnx_ref } = await req.json();
+    const { tx_ref } = await req.json(); // Get the transaction reference
+    if (!tx_ref) {
+      return NextResponse.json(
+        { message: "Transaction reference is missing" },
+        { status: 400 }
+      );
+    }
 
     // Define headers for the Chapa API request
     const header = {
@@ -16,27 +21,28 @@ export async function POST(req: NextRequest) {
 
     // Make the request to Chapa to verify the transaction
     const response = await axios.get(
-      `https://api.chapa.co/v1/transaction/verify/${tnx_ref}`,
+      `https://api.chapa.co/v1/transaction/verify/${tx_ref}`, // Correct URL with tnx_ref
       header
     );
 
-    // Chapa's response data
-    const resp = response.data;
+    const resp = response.data; // Get the response data from Chapa
 
-    // Return success response
+    // Return success response with transaction details
     return NextResponse.json({
-      message: "Payment successful",
+      message: "Payment verified successfully",
       status: "success",
-      data: resp,
+      data: resp.data, // Pass the transaction data
     });
   } catch (error: any) {
-    // Return error response
+    // Log and return any errors that occur
+    console.error("Chapa verification error:", error.response?.data || error.message);
+
     return NextResponse.json(
       {
         error_code: error.code || "UNKNOWN_ERROR",
-        message: error.message || "Something went wrong",
+        message: error.response?.data.message || "Something went wrong during verification",
       },
-      { status: 400 }
+      { status: error.response?.status || 400 }
     );
   }
 }

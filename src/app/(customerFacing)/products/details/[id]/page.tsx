@@ -70,7 +70,7 @@ export default async function page({ params: { id } }: { params: { id: string } 
           
 
           <p>{product?.description} and other lorum kind of Lorem ipsum dolor sit. Ut dolore fugiat sapiente dignissimos quae labore corporis, consectetur maxime. Autem, asperiores vel. Cumque, maiores dolore? Ipsa officia dolore perferendis obcaecati. Facere ad eius libero at aspernatur et laudantium quo velit inventore excepturi neque ullam reprehenderit architecto, ex obcaecati! Minus placeat ipsam optio earum amet quis perspiciatis rerum ducimus odit, laborum saepe. quam sunt laudantium ducimus vitae fuga atque.</p>
-          <Link href={`/products/${id}/purchase`} >
+          <Link href={`/products/${id}/checkout`} >
             <Button className="w-full my-2">Purchase</Button>
           </Link>
         </div>

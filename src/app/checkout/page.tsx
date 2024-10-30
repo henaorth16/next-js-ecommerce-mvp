@@ -7,6 +7,7 @@ export default function CheckoutPage() {
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState(''); // Email state for input
   const router = useRouter();
+  const tx_ref = `TX-${Date.now()}`;
 
   // Dummy checkout data for testing
   const checkoutData = {
@@ -16,9 +17,9 @@ export default function CheckoutPage() {
     first_name: 'John',
     last_name: 'Doe',
     phone_number: '+251911234567',
-    tx_ref: `TX-${Date.now()}`, // Unique transaction reference
+    tx_ref: tx_ref, // Unique transaction reference
     callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/verify`,
-    return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/success`,
+    return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/success?tnx_ref=${tx_ref}`,
     customization: {
       title: 'Your Shop',
       description: 'Payment for products at Your Shop',
@@ -42,7 +43,7 @@ export default function CheckoutPage() {
     }
 
     try {
-      const response = await fetch('/api/chapa', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/chapa`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

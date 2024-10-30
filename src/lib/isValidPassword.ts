@@ -13,3 +13,14 @@ export async function hashPassword(password: string) {
 
   return Buffer.from(arrayBuffer).toString("base64")
 }
+
+
+export function isValidEmail(email: string) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+export function isValidPhone(num: string) {
+  // const phoneReg = /^0\d{9}$/
+  return num.startsWith("+") && num.length < 15
+}

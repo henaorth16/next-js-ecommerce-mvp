@@ -72,17 +72,20 @@ export default function Navigation() {
         </NavigationMenuList>
 
       </NavigationMenu>
-      {isSignedIn ? (
-        <div className="flex">
+      {isLoaded ? (
+
+        isSignedIn ? (
+          <div className="flex">
           <p>Hi {user.firstName}</p>
-          {isLoaded && <UserButton />}
+          { <UserButton />}
         </div>
       ) : (
         <div className="flex gap-3">
           <Button><SignInButton /></Button>
           <Button><SignUpButton /></Button>
         </div>
-      )}
+      )
+    ):""}
 
     </header>
   )

@@ -6,6 +6,7 @@ export async function POST(req: NextRequest) {
   try {
     // Parse the body from the request
     const {
+      productId,
       amount,
       currency,
       email,
@@ -13,10 +14,16 @@ export async function POST(req: NextRequest) {
       last_name,
       phone_number,
       tx_ref,
-      callback_url,
-      return_url,
       customization,
     } = await req.json();
+
+    // Validate request data
+    if (!amount || !currency || !email || !tx_ref) {
+      return NextResponse.json(
+        { message: "Required fields are missing" },
+        { status: 400 }
+      );
+    }
 
     // Chapa API headers with Authorization
     const header = {
@@ -35,8 +42,8 @@ export async function POST(req: NextRequest) {
       last_name: last_name,
       phone_number: phone_number,
       tx_ref: tx_ref,
-      callback_url: callback_url,
-      return_url: return_url,
+      callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/verify/`,
+      return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/success/${productId}`,
       "customization[title]": customization?.title || 'Default Title',
       "customization[description]": customization?.description || 'Payment description',
     };
@@ -51,11 +58,10 @@ export async function POST(req: NextRequest) {
     // Return success response to the client
     return NextResponse.json(response.data, { status: 200 });
   } catch (error: any) {
-    console.error("Error Response Data:", error.response?.data); // Log Chapa error response
-    console.error("Error Status Code:", error.response?.status); // Log status code
-    console.error("Error Message:", error.message); // Log error message
+    console.error("Error Response Data:", error.response?.data);
+    console.error("Error Status Code:", error.response?.status);
+    console.error("Error Message:", error.message);
 
-    // Return error response with more details
     return NextResponse.json(
       {
         message: "Payment initialization failed",

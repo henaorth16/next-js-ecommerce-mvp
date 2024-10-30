@@ -1,7 +1,8 @@
+import { Product } from '@prisma/client';
 "use server";
 
 import db from "@/db/db";
-import { z } from "zod";
+import { string, z } from "zod";
 import fs from "fs/promises";
 import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -62,12 +63,6 @@ export async function addProduct(prevState: unknown, formData: FormData) {
 
   const { secure_url } = imageUploadResult as { secure_url: string };
 
-  // Handle the file upload locally (or to another cloud storage if necessary)
-  // await fs.mkdir("products", { recursive: true })
-  // const filePath = `products/${crypto.randomUUID()}-${data.file.name}`
-  // await fs.writeFile(filePath, Buffer.from(await data.file.arrayBuffer()))
-
-  // Store the product in the database
   await db.product.create({
     data: {
       isAvailableForPurchase: false,
