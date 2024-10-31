@@ -20,7 +20,19 @@ const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : `${process.env.NEXT_PUBLIC_URL}`;
 
-export const PurchaseReceiptEmail = ({product, username}:{product:any, username:string}) => (
+type popTypes = {
+  product: {
+    id: string,
+    name: string,
+    priceInCents: number,
+    imagePath: string,
+    description: string,
+    isAvailableForPurchase: boolean,
+  }
+  username: string
+}
+
+export const PurchaseReceiptEmail = ({ product, username }: popTypes) => (
   <Html>
     <Head />
     <Preview>Get your order summary, estimated delivery date, and more</Preview>
@@ -33,11 +45,7 @@ export const PurchaseReceiptEmail = ({product, username}:{product:any, username:
                 <Text className="font-bold text-base leading-relaxed">Tracking Number</Text>
                 <Text className="mt-3 font-medium text-sm text-gray-600 leading-snug">1ZV218970300071628</Text>
               </Column>
-              <Column align="right">
-                <Link className="block w-56 text-center font-medium text-black border border-gray-400 px-4 py-2">
-                  Track Package
-                </Link>
-              </Column>
+              <Column align="right"></Column>
             </Row>
           </Section>
           <Hr className="border-gray-200 m-0" />
@@ -55,15 +63,14 @@ export const PurchaseReceiptEmail = ({product, username}:{product:any, username:
             </Text>
             <Text className="text-gray-600 font-medium mt-6">
               We’ve also charged your payment method for the cost of your order
-              and will be removing any authorization holds. For payment details,
-              please visit your Orders page on Nike.com or in the Nike app.
+              and will be removing any authorization holds.
             </Text>
           </Section>
           <Hr className="border-gray-200 m-0" />
           <Section className="px-10 py-6">
-            <Text className="font-bold text-base">Shipping to: Alan Turing</Text>
+            <Text className="font-bold text-base">Shipping to: {username}</Text>
             <Text className="text-gray-600 text-sm mt-1">
-              2125 Chestnut St, San Francisco, CA 94123
+              your Phone: { }
             </Text>
           </Section>
           <Hr className="border-gray-200 m-0" />
@@ -77,8 +84,8 @@ export const PurchaseReceiptEmail = ({product, username}:{product:any, username:
                 />
               </Column>
               <Column className="pt-3 pl-3">
-                <Text className="font-medium leading-snug">Brazil 2022/23 Stadium Away Women's Nike Dri-FIT Soccer Jersey</Text>
-                <Text className="text-gray-600">Size L (12–14)</Text>
+                <Text className="font-medium leading-snug">{product.description}</Text>
+                <Text className="text-gray-600">Size All </Text>
               </Column>
             </Row>
           </Section>
