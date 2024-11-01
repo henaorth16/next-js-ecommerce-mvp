@@ -1,7 +1,12 @@
 "use client";
-import { useUser } from '@clerk/nextjs';
+import { RedirectToSignUp, useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
-import { isValidEmail, isValidPhone } from '@/lib/isValidPassword'; // Ensure this function checks email validity
+import { isValidPhone } from '@/lib/isValidPassword'; // Ensure this function checks email validity
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@radix-ui/react-label';
+import { Button } from '@/components/ui/button';
+import { ChevronRight, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 interface product {
   id: string,
@@ -16,10 +21,10 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const [phone, setPhone] = useState('+251');
   const { user } = useUser();
   const tx_ref = `TX-${Date.now()}`;
-
   useEffect(() => {
     // Fetch product data by ID
     async function fetchData() {
+      
       setLoading(true)
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/${id}`);
@@ -97,27 +102,105 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   };
 
   return (
-    <div>
-      <h1>Checkout Page</h1>
-      <p>Total Amount: {product ? (product.priceInCents / 100) : 0} ETB</p>
-      <p>email: {user?.emailAddresses?.[0].emailAddress || email}</p>
-      <p>first name: {user?.firstName}</p>
-      <p>last name: {user?.lastName}</p>
-      <form>
-        <input
-          type="text"
-          value={phone}
-          // value={phone !== 0 ? phone : ""}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="Enter your phone number"
-        />
+    // <div>
+    //   <h1>Checkout Page</h1>
+    //   <p>Total Amount: {product ? (product.priceInCents / 100) : 0} ETB</p>
+    //   <p>email: {user?.emailAddresses?.[0].emailAddress || email}</p>
+    //   <p>first name: {user?.firstName}</p>
+    //   <p>last name: {user?.lastName}</p>
+    //   <form>
+    //     <input
+    //       type="text"
+    //       value={phone}
+    //       // value={phone !== 0 ? phone : ""}
+    //       onChange={(e) => setPhone(e.target.value)}
+    //       placeholder="Enter your phone number"
+    //     />
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+    //     {error && <p style={{ color: 'red' }}>{error}</p>}
 
-        <button onClick={handlePayment} disabled={loading}>
-          {loading ? 'Processing...' : 'Pay Now'}
-        </button>
-      </form>
-    </div>
+    //     <button onClick={handlePayment} disabled={loading}>
+    //       {loading ? 'Processing...' : 'Pay Now'}
+    //     </button>
+    //   </form>
+    // </div>
+
+    <section className="custom-screen-lg mx-auto z-20">
+      <div className="relative backdrop-blur-3xl z-10 max-w-4xl mx-auto  space-y-4">
+        <Card className="relative mt-20 py-10 z-20 backdrop-blur-3xl">
+          <CardHeader>
+            <CardTitle>
+              Checkout
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CardDescription>
+              We need additional informatio to complete purchasing. please fill your phone number below
+            </CardDescription>
+            <div className=""></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 z-20">
+              <div className="space-y-2">
+                <Label htmlFor="first-name">Full Name</Label>
+                <Input
+                  value={user?.fullName as string}
+                  name="firstName"
+                  type="text"
+                  placeholder="Enter your first name"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="last-name">Email</Label>
+                <Input
+                  value={user?.emailAddresses?.[0].emailAddress || email}
+                  name="lastName"
+                  placeholder="Enter your last name"
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Amount</Label>
+              <Input
+              disabled
+                value={product ? (product.priceInCents / 100) : 0}
+                placeholder="amount"
+                type="number"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Phone number</Label>
+              <Input
+
+                value={phone}
+                name="email"
+                placeholder="Enter your email"
+                onChange={(e) => setPhone(e.target.value)}
+                type="email"
+                required
+              />
+            </div>   
+            <div className="space-y-2">
+            </div>
+            {error && <p className='text-red-700'>{error}</p>}
+          </CardContent>
+          <CardFooter>
+            <Button
+              disabled={loading}
+              variant="default"
+              className="mt-6 w-full"
+              onClick={handlePayment}
+            >
+              Pay now
+              {loading ? (
+                <Loader2 className="animate-spin ml-3 w-4 h-4 flex items-center" />
+              ) : (
+                <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 duration-300" />
+              )}
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+    </section>
   );
 }

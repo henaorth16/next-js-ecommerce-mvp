@@ -6,7 +6,8 @@ import { NavigationMenu, NavigationMenuList, NavigationMenuLink } from "@/compon
 import { usePathname } from "next/navigation"
 import { MountainSnow, MountainSnowIcon } from "lucide-react"
 import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs"
-
+import logo from "../../public/asset/logo.png"
+import Image from "next/image"
 const links = [
   {
     title: "Home",
@@ -28,15 +29,15 @@ export default function Navigation() {
     <header className="flex h-20 w-full shrink-0 sticky top-0 z-[999] bg-slate-100 items-center px-4 md:px-6 font-jost justify-between">
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="lg:hidden">
+          <Button variant="outline" size="icon" className="z-[999] lg:hidden">
             <MenuIcon className="h-6 w-6" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
           {/* {logo */}
-          <Link href="/" prefetch={false}>
-            <MountainSnowIcon className="h-6 w-6" />
+          <Link href="/" className="w-5 top-7 z-[9999]" prefetch={false}>
+            <Image src={logo} alt="logo" width={500} height={500}/>
             <span className="sr-only">Acme Inc</span>
           </Link>
 
@@ -50,10 +51,10 @@ export default function Navigation() {
         </SheetContent>
       </Sheet>
       <NavigationMenu className="hidden lg:flex">
-        <Link href="/" className="mr-6 hidden lg:flex" prefetch={false}>
-          <MountainSnow className="h-6 w-6" />
-          <span className="sr-only">Acme Inc</span>
-        </Link>
+      <Link href="/" className="w-10" prefetch={false}>
+            <Image src={logo} alt="logo" width={500} height={500}/>
+            <span className="sr-only">Acme Inc</span>
+          </Link>
 
         <NavigationMenuList>
           {links.map((item, idx) => (
