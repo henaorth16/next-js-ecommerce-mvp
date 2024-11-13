@@ -161,7 +161,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
             <div className="space-y-2">
               <Label htmlFor="email">Amount</Label>
               <Input
-              disabled
+                disabled
                 value={product ? (product.priceInCents / 100) : 0}
                 placeholder="amount"
                 type="number"

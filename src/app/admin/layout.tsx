@@ -9,6 +9,7 @@ export default function AdminLayout({
 }>) {
   return (
     <>
+    <section className="w-[90%] mx-auto">
       <Nav>
         <NavLink href="/admin">Dashboard</NavLink>
         <NavLink href="/admin/products">Products</NavLink>
@@ -16,6 +17,7 @@ export default function AdminLayout({
         <NavLink href="/admin/orders">Sales</NavLink>
       </Nav>
       <div className="container my-6">{children}</div>
+    </section>
     </>
   )
 }

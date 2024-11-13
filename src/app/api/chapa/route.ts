@@ -42,10 +42,11 @@ export async function POST(req: NextRequest) {
       last_name: last_name,
       phone_number: phone_number,
       tx_ref: tx_ref,
-      callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/verify/`,
-      return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/success/${productId}`,
-      "customization[title]": customization?.title || 'Default Title',
-      "customization[description]": customization?.description || 'Payment description',
+      callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/callback`,
+      return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/success/${productId}?ref=${tx_ref}`,
+      "customization[title]": customization?.title as string || "Default Title",
+      "customization[description]":
+        customization?.description || "Payment description",
     };
 
     // Send the request to Chapa's initialize transaction endpoint
@@ -54,7 +55,7 @@ export async function POST(req: NextRequest) {
       body,
       header
     );
-
+ 
     // Return success response to the client
     return NextResponse.json(response.data, { status: 200 });
   } catch (error: any) {

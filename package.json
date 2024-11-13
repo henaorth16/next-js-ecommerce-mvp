@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "email": "email dev --dir src/email --port 3001"
+    "email": "react-email dev --dir src/email"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.7.3",

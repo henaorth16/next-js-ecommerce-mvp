@@ -20,7 +20,7 @@ const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : `${process.env.NEXT_PUBLIC_URL}`;
 
-type popTypes = {
+type propTypes = {
   product: {
     id: string,
     name: string,
@@ -32,7 +32,7 @@ type popTypes = {
   username: string
 }
 
-export const PurchaseReceiptEmail = ({ product, username }: popTypes) => (
+export const PurchaseReceiptEmail = ({ product, username }: propTypes) => (
   <Html>
     <Head />
     <Preview>Get your order summary, estimated delivery date, and more</Preview>
@@ -54,7 +54,7 @@ export const PurchaseReceiptEmail = ({ product, username }: popTypes) => (
               src="../../public/asset/logo.png"
               width="66"
               height="22"
-              alt="Nike"
+              alt="Sol Habesha"
               className="mx-auto"
             />
             <Heading className="text-2xl font-bold text-center leading-tight tracking-tight">It's On Its Way.</Heading>
@@ -79,7 +79,7 @@ export const PurchaseReceiptEmail = ({ product, username }: popTypes) => (
               <Column>
                 <Img
                   src={product.imagePath}
-                  alt="Brazil 2022/23 Stadium Away Women's Nike Dri-FIT Soccer Jersey"
+                  alt="Addis Ababa, Merkato"
                   className="float-left w-64"
                 />
               </Column>

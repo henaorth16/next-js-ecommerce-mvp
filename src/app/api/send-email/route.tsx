@@ -2,17 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import PurchaseReceiptEmail from "@/email/PurchaseReceipt";
 import db from "@/db/db";
-import { auth, redirectToSignIn } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { auth, } from "@clerk/nextjs/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
 export async function POST(req: NextRequest) {
-  const {sessionId} = auth()
+
   const { productId, username } = await req.json();
   const product = await db.product.findUnique({
     where: {
       id: productId,
+      isAvailableForPurchase: true,
     },
     select: {
       id:true,
@@ -23,9 +23,9 @@ export async function POST(req: NextRequest) {
       isAvailableForPurchase:true,
     },
   })
-  if(!product || !sessionId) {
+  if(!product) {
     return NextResponse.json(
-      { message: "Failed to send email you may not authorized"},
+      { message: "Failed to send email the product not found"},
       { status: 500 }
     );
   }
