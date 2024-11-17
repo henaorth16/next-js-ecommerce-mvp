@@ -7,6 +7,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import Image from "next/image"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
+import CardBtn from "@/components/cardButton"
 
 export default async function page({ params: { id } }: { params: { id: string } }) {
   // const id = "65378675"
@@ -15,12 +16,12 @@ export default async function page({ params: { id } }: { params: { id: string } 
       id: id,
     },
     select: {
-      id:true,
+      id: true,
       name: true,
       priceInCents: true,
-      imagePath:true,
+      imagePath: true,
       description: true,
-      isAvailableForPurchase:true,
+      isAvailableForPurchase: true,
     },
   })
 
@@ -60,19 +61,19 @@ export default async function page({ params: { id } }: { params: { id: string } 
               </ToggleGroup>
             </div>
             <div className="flex flex-col items-start">
-          <p className="text-sm text-muted-foreground font-medium">Quantity:</p>
-             <Input type="number" value={1} className="w-32"/>
-          </div>
+              <p className="text-sm text-muted-foreground font-medium">Quantity:</p>
+              <Input type="number" value={1} className="w-32" />
+            </div>
           </div>
 
 
           <hr className="w-full my-4 bg-black" />
-          
 
-          <p>{product?.description} and other lorum kind of Lorem ipsum dolor sit. Ut dolore fugiat sapiente dignissimos quae labore corporis, consectetur maxime. Autem, asperiores vel. Cumque, maiores dolore? Ipsa officia dolore perferendis obcaecati. Facere ad eius libero at aspernatur et laudantium quo velit inventore excepturi neque ullam reprehenderit architecto, ex obcaecati! Minus placeat ipsam optio earum amet quis perspiciatis rerum ducimus odit, laborum saepe. quam sunt laudantium ducimus vitae fuga atque.</p>
-          <Link href={`/products/${id}/checkout`} >
-            <Button className="w-full my-2">Purchase</Button>
-          </Link>
+
+          <p>{product?.description} and other lorum kind of Lorem ipsum asperiores vel. Cumque, maiores dolore? Ipsa officia dolore perferendis obcaecati. Facere ad eius libero at aspernatur et laudantium quo velit inventore excepturi neque ullam reprehenderit architecto, ex obcaecati! Minus placeat ipsam optio earum amet quis perspiciatis rerum ducimus odit, laborum saepe. quam sunt laudantium ducimus vitae fuga atque.</p>
+          <CardBtn link={`/products/${id}/checkout`} className="w-full text-white mt-6">
+            Purchase Now
+          </CardBtn>
         </div>
       </div>
       {/* <Recomended /> */}

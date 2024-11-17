@@ -1,3 +1,4 @@
+"use client"
 import { formatCurrency } from "@/lib/formatters"
 import {
   Card,
@@ -10,6 +11,7 @@ import {
 import { Button } from "./ui/button"
 import Link from "next/link"
 import Image from "next/image"
+import CardBtn from "./cardButton"
 
 type ProductCardProps = {
   id: string
@@ -40,9 +42,9 @@ export function ProductCard({
           <CardDescription>{formatCurrency(priceInCents / 100)}</CardDescription>
         </CardHeader>
         <CardFooter>
-          <Button asChild size="lg" className="w-full">
-            <Link href={`/products/${id}/checkout`}>Purchase</Link>
-          </Button>
+          <CardBtn link={`/products/${id}/checkout`} className="w-full text-white">
+            Purchase
+          </CardBtn>
         </CardFooter>
       </Card>
     </div>

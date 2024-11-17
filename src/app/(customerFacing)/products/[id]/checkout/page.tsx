@@ -1,5 +1,5 @@
 "use client";
-import { RedirectToSignUp, useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 import { isValidPhone } from '@/lib/isValidPassword'; // Ensure this function checks email validity
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +7,7 @@ import { Label } from '@radix-ui/react-label';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import OrderSummary from '@/components/OrderSummary';
 
 interface product {
   id: string,
@@ -14,17 +15,20 @@ interface product {
 }
 
 export default function Page({ params: { id } }: { params: { id: string } }) {
-  const [product, setProduct] = useState<any>(null); // Update to proper type if needed
+  const [product, setProduct] = useState<any>({}); // Update to proper type if needed
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('+251');
+  const [phone, setPhone] = useState<string>('+251');
+  const [tx_ref, setTx_ref] = useState<string>('');
   const { user } = useUser();
-  const tx_ref = `TX-${Date.now()}`;
+
   useEffect(() => {
     // Fetch product data by ID
     async function fetchData() {
-      
+
+      const tx_ref = `TX-${Date.now()}`;
+      setTx_ref(tx_ref)
       setLoading(true)
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/${id}`);
@@ -34,16 +38,19 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         }
         const jsonData = await res.json();
         setProduct(jsonData);
+        console.log(product)
       } catch (error) {
         setError('Error fetching product');
       }
     }
 
+
     if (id) {
       fetchData();
       setLoading(false)
     }
-  }, [id]);
+
+  }, [id, product,]);
 
   const handlePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -101,33 +108,18 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     }
   };
 
+  if (loading) {
+    return (
+      <Loader2 className='animate-spin' />
+    )
+  }
+
   return (
-    // <div>
-    //   <h1>Checkout Page</h1>
-    //   <p>Total Amount: {product ? (product.priceInCents / 100) : 0} ETB</p>
-    //   <p>email: {user?.emailAddresses?.[0].emailAddress || email}</p>
-    //   <p>first name: {user?.firstName}</p>
-    //   <p>last name: {user?.lastName}</p>
-    //   <form>
-    //     <input
-    //       type="text"
-    //       value={phone}
-    //       // value={phone !== 0 ? phone : ""}
-    //       onChange={(e) => setPhone(e.target.value)}
-    //       placeholder="Enter your phone number"
-    //     />
 
-    //     {error && <p style={{ color: 'red' }}>{error}</p>}
+    <section className="mx-auto z-20">
+      <div className="relative backdrop-blur-3xl z-10 md:flex md:gap-6 justify-center items-center max-w-6xl md:mx-auto mx-4 space-y-4">
 
-    //     <button onClick={handlePayment} disabled={loading}>
-    //       {loading ? 'Processing...' : 'Pay Now'}
-    //     </button>
-    //   </form>
-    // </div>
-
-    <section className="custom-screen-lg mx-auto z-20">
-      <div className="relative backdrop-blur-3xl z-10 max-w-4xl mx-auto  space-y-4">
-        <Card className="relative mt-20 py-10 z-20 backdrop-blur-3xl">
+        <Card className="relative flex-1 mt-20 py-10 z-20 backdrop-blur-3xl">
           <CardHeader>
             <CardTitle>
               Checkout
@@ -179,7 +171,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                 type="email"
                 required
               />
-            </div>   
+            </div>
             <div className="space-y-2">
             </div>
             {error && <p className='text-red-700'>{error}</p>}
@@ -200,7 +192,9 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
             </Button>
           </CardFooter>
         </Card>
+        <OrderSummary product={product} />
       </div>
     </section>
   );
 }
+

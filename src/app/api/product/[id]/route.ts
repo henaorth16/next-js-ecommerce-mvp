@@ -12,6 +12,8 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       select: {
         id: true,
         priceInCents: true,
+        imagePath:true,
+        name:true,
         isAvailableForPurchase: true,
       },
     });

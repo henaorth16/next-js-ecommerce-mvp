@@ -37,7 +37,7 @@ export default function SuccessPage({ params: { id } }: { params: { id: string }
       try {
         const response = await axios.post("/api/verify", { tx_ref });
         console.log("ressss", response)
-        if (response.data.status === "success") {
+        if (response.data.status == "success") {
           setShowConfetti(true);
           await sendEmail(id, username || "Customer");
           setEmailSent(true);
