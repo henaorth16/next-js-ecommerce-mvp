@@ -26,10 +26,10 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   useEffect(() => {
     // Fetch product data by ID
     async function fetchData() {
-
+      
+      setLoading(true)
       const tx_ref = `TX-${Date.now()}`;
       setTx_ref(tx_ref)
-      setLoading(true)
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/${id}`);
         if (!res.ok) {
@@ -37,20 +37,18 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
           return;
         }
         const jsonData = await res.json();
+        console.log(jsonData)
         setProduct(jsonData);
-        console.log(product)
       } catch (error) {
         setError('Error fetching product');
       }
     }
-
-
     if (id) {
       fetchData();
       setLoading(false)
     }
 
-  }, [id, product,]);
+  }, [id]);
 
   const handlePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -128,7 +126,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
               <div className="space-y-2">
                 <Label htmlFor="first-name">Full Name</Label>
                 <Input
-                  value={user?.fullName as string}
+                  value={(user?.fullName as string) ?? ""}
                   name="firstName"
                   type="text"
                   placeholder="Enter your first name"

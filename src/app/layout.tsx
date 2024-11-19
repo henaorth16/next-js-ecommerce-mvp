@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <head>
           <link rel="icon" href="\public/fav.ico" type="image/x-icon" />
         </head>

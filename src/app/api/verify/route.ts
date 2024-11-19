@@ -28,20 +28,12 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-
-    // Validate environment variable
-    const chapaSecretKey = process.env.CHAPA_SECRET_KEY;
-    if (!chapaSecretKey) {
-      return NextResponse.json(
-        { message: "Server error: Missing Chapa secret key" },
-        { status: 500 }
-      );
-    }
+    console.log("txxxx__ref", tx_ref)
 
     // Configure headers
     const header = {
       headers: {
-        Authorization: `Bearer ${chapaSecretKey}`,
+        Authorization: `Bearer ${process.env.CHAPA_SECRET_KEY}`,
         "Content-Type": "application/json",
       },
     };

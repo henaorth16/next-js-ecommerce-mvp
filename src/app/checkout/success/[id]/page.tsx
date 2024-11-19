@@ -36,7 +36,7 @@ export default function SuccessPage({ params: { id } }: { params: { id: string }
 
       try {
         const response = await axios.post("/api/verify", { tx_ref });
-        console.log("ressss", response)
+        console.log("resp", response)
         if (response.data.status == "success") {
           setShowConfetti(true);
           await sendEmail(id, username || "Customer");
@@ -53,7 +53,7 @@ export default function SuccessPage({ params: { id } }: { params: { id: string }
     };
 
     verifyTransaction();
-  }, [id, tx_ref, isLoaded, isSignedIn]);
+  }, [id]);
 
   
   async function sendEmail(productId: string, username: string) {
