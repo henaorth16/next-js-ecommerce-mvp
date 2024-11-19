@@ -37,8 +37,8 @@ model Order {
   email            String
   phone            String
   currency         String
-  reference        String
-  tx_ref           String
+  reference        String  @unique
+  tx_ref           String  @unique
   productId        String
   product          Product @relation(fields: [productId], references: [id], onDelete: Restrict)
   pricePaidInCents Int
