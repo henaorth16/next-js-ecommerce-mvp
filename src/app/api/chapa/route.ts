@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
+import { describe } from "node:test";
 
 // Convert to async POST function for Next.js App Router
 export async function POST(req: NextRequest) {
@@ -44,9 +45,10 @@ export async function POST(req: NextRequest) {
       tx_ref: tx_ref,
       callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/callback`,
       return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/success/${productId}?ref=${tx_ref}`,
-      "customization[title]": customization?.title as string || "Default Title",
-      "customization[description]":
-        customization?.description || "Payment description",
+      customization: {
+        title : "product title",
+        description: productId,
+      }
     };
 
     // Send the request to Chapa's initialize transaction endpoint

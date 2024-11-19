@@ -28,7 +28,7 @@ export function ProductCard({
   imagePath,
 }: ProductCardProps) {
   return (
-    <div className="w-full">
+    <div className="max-w-[27rem]">
       <Card className="flex overflow-hidden h-auto mx-auto flex-col rounded-sm">
         <div className="relative w-full aspect-[5/6] overflow-hidden -mb-2">
           <Link href={`/products/details/${id}`}>

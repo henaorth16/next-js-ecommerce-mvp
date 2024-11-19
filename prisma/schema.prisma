@@ -28,18 +28,21 @@ model User {
   email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  orders    Order[]
 }
 
 model Order {
-  id               String   @id @default(uuid())
+  id               String  @id @default(uuid())
+  first_name       String
+  last_name        String
+  email            String
+  phone            String
+  currency         String
+  reference        String
+  tx_ref           String
+  productId        String
+  product          Product @relation(fields: [productId], references: [id], onDelete: Restrict)
   pricePaidInCents Int
   createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  userId           String
-  productId        String
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product          Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
 }
 
 model DownloadVerification {

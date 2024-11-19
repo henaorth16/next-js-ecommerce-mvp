@@ -57,12 +57,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     setLoading(true);
     setError(null);
 
-    // if (!isValidEmail(email)) {
-    //   setError('Please enter a valid email address.');
-    //   setLoading(false);
-    //   return;
-    // }
-
     if (!phone || !isValidPhone(phone) || Number.isNaN(phone)) {
       setError('Please enter a valid phone number. Eg: +251912345678');
       setLoading(false);
@@ -72,15 +66,15 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     try {
       const checkoutData = {
         productId: product.id as string,
-        amount: product.priceInCents / 100, // In ETB
+        amount: product.priceInCents / 100, 
         currency: 'ETB',
-        email: user?.emailAddresses?.[0].emailAddress || email, // Use Clerk user email if available
+        email: user?.emailAddresses?.[0].emailAddress || email,
         first_name: user ? user.firstName : 'Firstname',
         last_name: user ? user.lastName : 'Lastname',
         phone_number: phone,
         tx_ref: tx_ref, // Unique transaction reference
         customization: {
-          title: 'Your Shop',
+          title: 'Your Payment',
           description: 'Payment for products at Your Shop',
         },
       };

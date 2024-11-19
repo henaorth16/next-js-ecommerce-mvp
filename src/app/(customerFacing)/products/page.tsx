@@ -12,7 +12,8 @@ const getProducts = cache(() => {
 
 export default function ProductsPage() {
   return <>
-    
+    <h1 className="text-3xl my-2 w-5/6 mx-auto ">Products</h1>
+    <hr className="my-3"/>
     <div className="my-y-5 md:w-5/6 mx-auto grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
       <Suspense
         fallback={
