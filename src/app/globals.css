@@ -2,11 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: amharic;
+  src: url(../../public/asset/adwa-SansSerif-Regular.ttf);
+}
 
-
+:root{
+  --orange-clr: #f68520;
+  --blue-clr: #103558;
+  --back-clr: #f6f6f6;
+}
 
 @layer base {
   :root {
+    --amharic: amharic;
+    --orange-clr: #f68520;
+    --blue-clr: #103558;
+    --back-clr: #f6f6f6;
     --font-jost: "Jost", sans-serif;
     --font-poppins: "Poppins", sans-serif;
     --background: 0 0% 100%;

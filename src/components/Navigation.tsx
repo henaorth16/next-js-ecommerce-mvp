@@ -37,7 +37,7 @@ export default function Navigation() {
   const { isSignedIn, user, isLoaded, } = useUser()
   const pathname = usePathname()
   return (
-    <header className="flex h-20 w-full shrink-0 sticky bg-background top-0 z-[999] items-center px-4 md:px-6 font-jost justify-between">
+    <header className="flex h-20 w-full shrink-0 sticky lg:bg-background top-0 z-[999] items-center px-4 md:px-6 font-jost justify-between">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="z-[999] lg:hidden">
@@ -45,9 +45,13 @@ export default function Navigation() {
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
+        
+        <div className="ml-8 absolute left-6 lg:hidden">
+          <Logo/>
+          </div>
         <SheetContent side="left">
           {/* {logo */}
-          <Logo/>
+          
 
           <div className="grid gap-2 py-6">
             {links.map((item, idx) => (

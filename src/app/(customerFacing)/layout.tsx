@@ -11,6 +11,7 @@ export default function Layout({
   return (
     <>
       <Navigation />
+      {/**  //TODO: height limitaion may affect the ui  **/}
       <div className="min-h-[calc(100vh-15rem)]">{children}</div>
       <Footer/>
     </>

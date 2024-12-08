@@ -1,6 +1,8 @@
 "use client"
 import React, {useState, useEffect} from 'react'
-
+import { ButtonOutLine } from './Logo';
+import heroImg from "../../public/asset/heroimg.png"
+import Image from 'next/image';
 
 export default function Hero() {
    const [top, setTop] = useState(0)
@@ -15,14 +17,32 @@ export default function Hero() {
       };
     }, []);
 
-   return (
-      <div className="hero h-[75vh] w-full flex items-center justify-center pl-12 bg-gray-900 bg-[url(https://i.pinimg.com/736x/b3/1b/ac/b31bacd3544ea9e4964fc6f5146f4e5e.jpg)] bg-cover bg-no-repeat bg-fixed bg-blend-overlay"
-       style={{backgroundPosition: `right 50% top ${top * 0.36}%`}}
-      >
-         <div className="leading-tight animated-text text-5xl font-jost text-center font-light text-white">
-            <h1>Looking for</h1>
-            <h1 className="">Your #1 Design?</h1>
-         </div>
-      </div>
-   )
+
+
+
+    return (
+      <section className="h-[75vh] w-full bg-[linear-gradient(166deg,_var(--back-clr)_40%,_var(--orange-clr))] z-0 pl-12 overflow-hidden">
+         <main className='carousel flex justify-around w-full h-full overflow-y-hidden'>
+            <h1 className='absolute text-[19rem] -bottom-16 text-backClr z-[0] left-24'>01</h1>
+            <div className='flex flex-col z-10 overflow-hidden '>
+              <div className="p-3 shadow-[-12px_0px_0_var(--blue-clr)] m-3 mb-16">sol habesha cloth dustrubuter and designs <br/><span className='font-semibold'>{new Date().getFullYear()}</span></div>
+              <h1 className="mainqoute text-7xl text-blueClr font-amharic">“በውኃ ይለቅ”</h1>
+              <div className='ml-4'>
+                 <p className='max-w-md my-4 text-lg font-amharic text-blueClr font-600'>ለጅምላና ልዩ ትእዛዝ የምትፈልጉ ይዘዙን በፍጥነት እናደርሳለን።</p>
+                 <ButtonOutLine text="Shop now"/>
+              </div>
+            </div>
+            <Image className='w-[300px] object-cover z-10 bg-transparent mix-blend-darken' src={heroImg}  alt="background image of carousel" />
+         </main>
+      </section>
+    )
+
+
+
+
+
+
+
+   
+
 }

@@ -9,7 +9,13 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+		fontFamily: {
+			amharic: "amharic"
+		},
   		colors: {
+			backClr:"var(--back-clr)",
+			blueClr:"var(--blue-clr)",
+			orangeClr:"var(--orange-clr)",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
