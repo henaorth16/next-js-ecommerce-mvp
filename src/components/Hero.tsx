@@ -6,13 +6,10 @@ import Image from 'next/image';
 
 export default function Hero() {
    const [top, setTop] = useState(0)
+
    useEffect(() => {
-   
-  
       window.addEventListener("scroll", () => setTop(window.scrollY));
-  
-      // Clean up the event listener on unmount
-      return () => {
+        return () => {
         window.removeEventListener("scroll",  () => setTop(window.scrollY));
       };
     }, []);
@@ -21,7 +18,7 @@ export default function Hero() {
 
 
     return (
-      <section className="h-[75vh] w-full bg-[linear-gradient(166deg,_var(--back-clr)_40%,_var(--orange-clr))] z-0 pl-12 overflow-hidden">
+      <section className="h-[75vh] w-full bg-[linear-gradient(176deg,_var(--back-clr)_30%,_var(--orange-clr))] z-0 pl-12 overflow-hidden">
          <main className='carousel flex justify-around w-full h-full overflow-y-hidden'>
             <h1 className='absolute text-[19rem] -bottom-16 text-backClr z-[0] left-24'>01</h1>
             <div className='flex flex-col z-10 overflow-hidden '>
@@ -32,17 +29,8 @@ export default function Hero() {
                  <ButtonOutLine text="Shop now"/>
               </div>
             </div>
-            <Image className='w-[300px] object-cover z-10 bg-transparent mix-blend-darken' src={heroImg}  alt="background image of carousel" />
+            <Image className='w-[300px] object-cover z-100 bg-transparent' src={heroImg}  alt="background image of carousel" />
          </main>
       </section>
     )
-
-
-
-
-
-
-
-   
-
 }
