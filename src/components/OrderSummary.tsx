@@ -16,7 +16,7 @@ type OrderSummaryProps = {
 
 export default function OrderSummary({ product }: OrderSummaryProps) {
    return <>
-     <section>
+     <section className='md:w-[31%]'>
        <Card className='p-4'>
          <CardHeader>
            <CardTitle>
@@ -25,7 +25,7 @@ export default function OrderSummary({ product }: OrderSummaryProps) {
          </CardHeader>
          <CardDescription>
            <div className='w-[100%] '>
-             <img src={product?.imagePath} className='mx-auto' alt="image" />
+             <img src={product?.imagePath} className='mx-auto max-w-full' alt="image" />
            </div>
            <div>
              <div className="flex w-full my-3 justify-between">

@@ -37,7 +37,7 @@ export default function Footer() {
         </div>
         <div className="quick my-2">
           <Header text="Quick link" />
-          <ul className=''>
+          <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#">Products</a></li>
             <li><a href="#">Gallery</a></li>
@@ -57,7 +57,7 @@ export default function Footer() {
         <div className="subscribe flex flex-col my-2 gap-2">
           <Header text="Subscribe our news letter" />
           <Input type='email' className='text-blueClr' placeholder='Email' />
-          <Button className='bg-orangeClr w-full'>Submit</Button>
+          <Button className='bg-orangeClr h-1/6 hover:bg-muted-foreground'>Submit</Button>
         </div>
       </section>
       <div className='flex w-full md:px-14 mx-auto items-center justify-between my-7'>
@@ -70,7 +70,7 @@ export default function Footer() {
           <li className='cursor-pointer' onClick={async() => {
              try {
               await navigator.clipboard.writeText(process.env.NEXT_PUBLIC_BASE_URL as string);
-              console.log('Content copied to clipboard');
+              alert('you Copied a link');
             } catch (err) {
               console.error('Failed to copy: ', err);
             }
@@ -82,6 +82,7 @@ export default function Footer() {
     </footer>
   )
 }
+
 function Header({ text }: { text: string }) {
   return <h2 className='text-lg font-semibold md:mb-2 mb-1'>{text}</h2>
 }

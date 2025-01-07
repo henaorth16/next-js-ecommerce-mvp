@@ -109,9 +109,9 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   return (
 
     <section className="mx-auto z-20">
-      <div className="relative backdrop-blur-3xl z-10 md:flex md:gap-6 justify-center items-center max-w-6xl md:mx-auto mx-4 space-y-4">
+      <div className="relative z-10 md:flex md:gap-6 max-w-6xl md:mx-auto m-4 ">
 
-        <Card className="relative flex-1 mt-20 py-10 z-20 backdrop-blur-3xl">
+        <Card className="relative flex-1 py-10 z-20">
           <CardHeader>
             <CardTitle>
               Checkout

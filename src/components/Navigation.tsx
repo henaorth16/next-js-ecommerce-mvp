@@ -90,7 +90,7 @@ export default function Navigation() {
         <div className="flex gap-3 items-center">
           
           <div className="search relative">
-            <Input className="rounded-full px-4 shadow-lg min-w-[300px]" type="search" name="search" id="search" placeholder="search" />
+            <Input className="rounded-lg px-4 shadow-lg min-w-[300px]" type="search" name="search" id="search" placeholder="search" />
             <Search className="absolute right-2 top-1/2 text-muted-foreground -translate-y-1/2 " />
           </div>
           <ShoppingBag className="mx-3 cursor-pointer"/>

@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard"
 import { Button } from "@/components/ui/button"
 import db from "@/db/db"
@@ -9,6 +8,7 @@ import Link from "next/link"
 import { Suspense } from "react"
 import About from "@/components/About"
 import Hero from "@/components/Hero"
+import SliderComponent from "@/components/Slider"
 const getMostPopularProducts = cache(
   () => {
     return db.product.findMany({
@@ -34,6 +34,7 @@ export default function HomePage() {
     <main className="">
       <Hero />
       <About />
+      <SliderComponent products={getMostPopularProducts} />
       <ProductGridSection
         title="Most Popular"
         productsFetcher={getMostPopularProducts}
@@ -53,7 +54,7 @@ function ProductGridSection({
   title,
 }: ProductGridSectionProps) {
   return (
-    <div className="space-y-4 mx-auto md:w-5/6 px-4">
+    <div className="space-y-4 mx-auto md:w-5/6">
       <div className="flex gap-4">
         <h2 className="text-3xl font-bold">{title}</h2>
         <Button variant="outline" asChild>
@@ -63,7 +64,7 @@ function ProductGridSection({
           </Link>
         </Button>
       </div>
-      <div className="w-5/7 mx-auto grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+      <div className=" mx-auto md:grid md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] md:gap-4 sm:gap-2">
         <Suspense
           fallback={
             <>

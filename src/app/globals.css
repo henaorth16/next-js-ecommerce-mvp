@@ -7,7 +7,7 @@
   src: url(../../public/asset/adwa-SansSerif-Regular.ttf);
 }
 
-:root{
+:root {
   --orange-clr: #f68520;
   --blue-clr: #103558;
   --back-clr: #f6f6f6;
@@ -106,5 +106,14 @@
 }
 footer a:hover {
   text-decoration: underline;
-  
+}
+
+.card-wrapper{
+  background-image: url();
+}
+.slick-list {
+  height: auto;
+}
+ul.slick-dots {
+  bottom: -4px;
 }
