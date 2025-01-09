@@ -22,6 +22,8 @@ interface ChapaResponse {
 export async function POST(req: NextRequest) {
   try {
     const { tx_ref } = await req.json();
+    console.log("Starting verification for tx_ref:", tx_ref);
+
     if (!tx_ref) {
       return NextResponse.json(
         { message: "Transaction reference is missing" },
@@ -38,11 +40,12 @@ export async function POST(req: NextRequest) {
       },
     };
 
-    // Verify transaction with Chapa API
+    console.log("Making request to Chapa API...");
     const { data }: { data: ChapaResponse } = await axios.get(
       `https://api.chapa.co/v1/transaction/verify/${tx_ref}`,
       header
     );
+    console.log("Chapa API response:", data);
 
     // Check Chapa response status
     if (data.status !== "success") {
@@ -61,8 +64,8 @@ export async function POST(req: NextRequest) {
           last_name: paymentData.last_name,
           email: paymentData.email,
           phone: paymentData.phone_number,
-          reference: paymentData.reference,
           currency: paymentData.currency,
+          reference: paymentData.reference,
           tx_ref: tx_ref,
           productId: paymentData.customization.description,
           pricePaidInCents: parseInt(paymentData.amount) * 100,
@@ -83,11 +86,17 @@ export async function POST(req: NextRequest) {
       data: paymentData,
     });
   } catch (error: any) {
-    console.error("Verification error:", error.response?.data || error.message);
+    console.error("Full error details:", {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+      stack: error.stack
+    });
     return NextResponse.json(
       {
         error_code: error.code || "UNKNOWN_ERROR",
         message: error.response?.data?.message || "Verification failed",
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
       },
       { status: error.response?.status || 500 }
     );

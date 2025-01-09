@@ -30,30 +30,27 @@ export default function SuccessPage({ params: { id } }: { params: { id: string }
         return;
       }
 
-      if (isSignedIn && isLoaded) {
-        setUsername(user.fullName as string)
-      }
+      
 
       try {
         const response = await axios.post("/api/verify", { tx_ref });
-        console.log("resp", response)
-        if (response.data.status == "success") {
+        if (response.data.status === "success") {
           setShowConfetti(true);
           await sendEmail(id, username || "Customer");
           setEmailSent(true);
         } else {
-          setError("Transaction verification failed.");
+          setError(`Transaction verification failed: ${response.data.message || 'Unknown error'}`);
         }
-      } catch (verificationError) {
+      } catch (verificationError: any) {
         console.error("Verification error:", verificationError);
-        setError("An error occurred during transaction verification.");
+        setError(verificationError.response?.data?.message || "An error occurred during transaction verification.");
       } finally {
         setLoading(false);
       }
     };
 
     verifyTransaction();
-  }, [id]);
+  }, [tx_ref, id, user, isLoaded, isSignedIn]);
 
   
   async function sendEmail(productId: string, username: string) {

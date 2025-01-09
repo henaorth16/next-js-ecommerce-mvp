@@ -31,7 +31,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       const tx_ref = `TX-${Date.now()}`;
       setTx_ref(tx_ref)
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/${id}`);
+        const res = await fetch(`/api/product/${id}`);
         if (!res.ok) {
           setError("Product not found");
           return;
@@ -48,7 +48,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       setLoading(false)
     }
 
-  }, [id]);
+  }, [id, user]);
 
   const handlePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

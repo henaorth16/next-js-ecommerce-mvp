@@ -35,7 +35,7 @@ export function ProductCard({
             </Link>
             <ShoppingCartIcon className="absolute bottom-0 right-0 text-white cursor-pointer size-9 bg-orangeClr p-2 rounded-lg translate-x-1/4 translate-y-1/4 z-20" />
             <HeartIcon 
-              className="absolute right-2 top-2 cursor-pointer text-orangeClr size-9 hover:bg-orange-600 hover:bg-opacity-20 p-2 rounded-lg z-20" 
+              className="absolute focus-within:fill-orange-600 right-2 top-2 cursor-pointer text-orangeClr size-9 hover:bg-orange-600 hover:bg-opacity-20 p-2 rounded-lg z-20" 
               aria-label="Like"
             />
         </div>
