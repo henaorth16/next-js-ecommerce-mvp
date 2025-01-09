@@ -12,6 +12,7 @@ import {
 import Image from "next/image";
 import { formatCurrency } from "@/lib/formatters";
 import { Product } from "@prisma/client";
+import { ProductCard } from "./ProductCard";
 
 type SliderClientProps = {
   products: Product[];
@@ -24,11 +25,12 @@ function SliderClient({ products }: SliderClientProps) {
     dots: false,
     arrows: true,
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: 3.2,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
     adaptiveHeight: true,
+    VariableWidth: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -47,33 +49,16 @@ function SliderClient({ products }: SliderClientProps) {
   };
 
   return (
-    <div className="slider-container w-full px-4">
+    <div className="slider-container w-[94%] mx-auto px-4">
       <Slider ref={(slider: any) => (sliderRef = slider)} {...settings}>
         {products.map((product) => (
-          <div key={product.id} className="p-4 h-full">
-            <Card className="overflow-hidden w-[90%]">
-              <CardHeader className="p-0">
-                <div className="relative h-56 object-cover">
-                  <Image
-                    src={product.imagePath}
-                    alt={product.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="p-4">
-                <CardTitle className="text-lg">{product.name}</CardTitle>
-                <CardDescription>
-                  {formatCurrency(product.priceInCents / 100)}
-                </CardDescription>
-              </CardContent>
-              <CardFooter className="p-4">
-                <span className={`text-sm ${product.isAvailableForPurchase ? 'text-green-500' : 'text-red-500'}`}>
-                  {product.isAvailableForPurchase ? 'In Stock' : 'Out of Stock'}
-                </span>
-              </CardFooter>
-            </Card>
+          <div key={product.id} className="p-4 mr-36 h-full">
+            <ProductCard
+              id={product.id}
+              name={product.name}
+              priceInCents={product.priceInCents}
+              imagePath={product.imagePath}
+            />
           </div>
         ))}
       </Slider>

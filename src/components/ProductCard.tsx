@@ -17,7 +17,7 @@ type ProductCardProps = {
   id: string
   name: string
   priceInCents: number
-  description: string
+  // description: string
   imagePath: string
 }
 
@@ -28,7 +28,7 @@ export function ProductCard({
   imagePath,
 }: ProductCardProps) {
   return (
-    <div className="flex flex-col mx-5 my-5 md:my-0 md:mx-3 h-auto rounded-sm group">
+    <div className="flex flex-col mx-5 my-5 md:my-0 md:mx-3 h-auto group">
       <div className="relative w-full h-[25rem] md:h-[20rem] border-2 border-orange-500 rounded-lg overflow-hidden">
         <Link
           className="w-full inline-block rounded-lg overflow-hidden"
@@ -47,7 +47,7 @@ export function ProductCard({
           aria-label="Like"
         />
       </div>
-      <div className="relative px-3 py-2 flex justify-between items-center bg-gray-100 rounded-b-lg">
+      <div className="relative px-3 py-2 flex justify-between items-center bg-gray-100">
         <div className="flex flex-col">
           <h2 className="text-base sm:text-lg font-bold text-blueClr">{name}</h2>
           <p className="text-sm sm:text-md text-blueClr">Running Clothe</p>
