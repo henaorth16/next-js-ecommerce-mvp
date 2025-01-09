@@ -28,21 +28,20 @@ function SliderClient({ products }: SliderClientProps) {
     slidesToShow: 3.2,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 1500,
     adaptiveHeight: true,
-    VariableWidth: true,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow:1.8,
           arrows: true,
         },
       },
       {
         breakpoint: 640,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 1.2,
         },
       },
     ],
