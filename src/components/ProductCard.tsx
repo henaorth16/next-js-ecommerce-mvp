@@ -28,25 +28,39 @@ export function ProductCard({
   imagePath,
 }: ProductCardProps) {
   return (
-      <div className="flex  h-auto mx-auto flex-col rounded-sm group">
-          <div className="relative">
-            <Link className="w-full mx-auto md:h-[300px] max-h-[380px] md:max-w-[250px] rounded-lg overflow-hidden block border-2 border-orange-500" href={`/products/details/${id}`}>
-              <Image className="object-cover hover:scale-110 transition-transform" src={imagePath} width={400} height={500} alt={name} />
-            </Link>
-            <ShoppingCartIcon className="absolute bottom-0 right-0 text-white cursor-pointer size-9 bg-orangeClr p-2 rounded-lg translate-x-1/4 translate-y-1/4 z-20" />
-            <HeartIcon 
-              className="absolute focus-within:fill-orange-600 right-2 top-2 cursor-pointer text-orangeClr size-9 hover:bg-orange-600 hover:bg-opacity-20 p-2 rounded-lg z-20" 
-              aria-label="Like"
-            />
-        </div>
-        <div className="px-2 py-1 flex justify-between items-center group-hover:bg-gray-200 rounded-t-0 rounded-b-lg">
-          <div className="flex flex-col">
-            <h2 className="text-lg font-bold text-blueClr">{name}</h2>
-            <p className="text-sm text-blueClr">Running Clothe</p>
-          </div>
-            <p className="text-md text-primary font-normal">{formatCurrency(priceInCents / 100)}</p>
-        </div>
+    <div className="flex flex-col mx-5 my-5 md:my-0 md:mx-3 h-auto rounded-sm group">
+      <div className="relative w-full h-[25rem] md:h-[20rem] border-2 border-orange-500 rounded-lg overflow-hidden">
+        <Link
+          className="w-full inline-block rounded-lg overflow-hidden"
+          href={`/products/details/${id}`}
+        >
+          <Image
+            className="object-cover hover:scale-105 absolute top-0 left-0 w-full h-full transition-transform duration-300"
+            src={imagePath}
+            fill
+            alt={name}
+          />
+        </Link>
+        
+        <HeartIcon
+          className="absolute top-3 right-3 cursor-pointer size-9 text-orangeClr hover:bg-orange-600 hover:bg-opacity-50 p-2 rounded-full"
+          aria-label="Like"
+        />
       </div>
+      <div className="relative px-3 py-2 flex justify-between items-center bg-gray-100 rounded-b-lg">
+        <div className="flex flex-col">
+          <h2 className="text-base sm:text-lg font-bold text-blueClr">{name}</h2>
+          <p className="text-sm sm:text-md text-blueClr">Running Clothe</p>
+        </div>
+        <ShoppingCartIcon
+          className="absolute -top-7 right-0 translate-x-1/4 z-[900] text-white cursor-pointer size-9 bg-orangeClr p-2 rounded-lg hover:scale-105 shadow-lg"
+        />
+        <p className="text-sm sm:text-md text-primary font-medium">
+          {formatCurrency(priceInCents / 100)}
+        </p>
+      </div>
+    </div>
+
   )
 }
 

@@ -64,7 +64,7 @@ function ProductGridSection({
           </Link>
         </Button>
       </div>
-      <div className=" mx-auto md:grid md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] md:gap-4 sm:gap-2">
+      <div className=" mx-auto md:grid md:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] sm:gap-2">
         <Suspense
           fallback={
             <>
