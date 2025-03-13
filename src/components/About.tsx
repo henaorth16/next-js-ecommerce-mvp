@@ -38,7 +38,7 @@ export default function About() {
       <div className="sm:w-[80%] mx-auto md:w-[90%] w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 items-baseline">
 
         {datas.map((i, idx) => (
-          <div key={idx} className=" z-[900] border-b-2 p-3 w-auto text-center sm:text-left ">
+          <div key={idx} className=" border-b-2 p-3 w-auto text-center sm:text-left ">
             <span className="text-center w-fit">{i.icon}</span>
             <h3 className="my-2 font-bold text-lg">{i.title}</h3>
             <p>{i.body}</p>

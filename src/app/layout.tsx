@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils"
 import { ClerkProvider } from "@clerk/nextjs"
 import { StrictMode } from "react"
+import { Analytics } from "@vercel/analytics/react"
 // Assign unique variables to each font
 const jost = Jost({ subsets: ["latin"], variable: "--font-jost" })
 const poppins = Poppins({
@@ -56,6 +57,8 @@ export default function RootLayout({
             {children}
             <Toaster />
           </StrictMode>
+          {/* Todo: analytics enable */}
+          {/* <Analytics /> */}
         </body>
       </html>
     </ClerkProvider>

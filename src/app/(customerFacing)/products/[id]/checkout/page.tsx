@@ -23,32 +23,32 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const [tx_ref, setTx_ref] = useState<string>('');
   const { user } = useUser();
 
-  useEffect(() => {
-    // Fetch product data by ID
-    async function fetchData() {
+  // useEffect(() => {
+  //   // Fetch product data by ID
+  //   async function fetchData() {
       
-      setLoading(true)
-      const tx_ref = `TX-${Date.now()}`;
-      setTx_ref(tx_ref)
-      try {
-        const res = await fetch(`/api/product/${id}`);
-        if (!res.ok) {
-          setError("Product not found");
-          return;
-        }
-        const jsonData = await res.json();
-        console.log(jsonData)
-        setProduct(jsonData);
-      } catch (error) {
-        setError('Error fetching product');
-      }
-    }
-    if (id) {
-      fetchData();
-      setLoading(false)
-    }
+  //     setLoading(true)
+  //     const tx_ref = `TX-${Date.now()}`;
+  //     setTx_ref(tx_ref)
+  //     try {
+  //       const res = await fetch(`/api/product/${id}`);
+  //       if (!res.ok) {
+  //         setError("Product not found");
+  //         return;
+  //       }
+  //       const jsonData = await res.json();
+  //       console.log(jsonData)
+  //       setProduct(jsonData);
+  //     } catch (error) {
+  //       setError('Error fetching product');
+  //     }
+  //   }
+  //   if (id) {
+  //     fetchData();
+  //     setLoading(false)
+  //   }
 
-  }, [id, user]);
+  // }, [id, user]);
 
   const handlePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

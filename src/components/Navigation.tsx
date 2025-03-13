@@ -6,12 +6,11 @@ import { NavigationMenu, NavigationMenuList, NavigationMenuLink } from "@/compon
 import { usePathname } from "next/navigation"
 import { LogInIcon, Search, ShoppingBag } from "lucide-react"
 import { UserButton, useUser } from "@clerk/nextjs"
-import logo from "../../public/asset/logo.png"
-import Image from "next/image"
 import Logo from "./Logo"
 import { Input } from "./ui/input"
 import { useAuth } from "@clerk/nextjs"
 import { useClerk } from "@clerk/nextjs"
+import { CartIcon } from "./CartIcon"
 
 
 const links = [
@@ -37,7 +36,7 @@ export default function Navigation() {
   const { isSignedIn, user, isLoaded, } = useUser()
   const pathname = usePathname()
   return (
-    <header className="flex h-20 w-full shrink-0 sticky lg:bg-background top-0 z-[999] items-center px-4 md:px-6 font-jost justify-between">
+    <header className="flex h-20 w-full shrink-0 sticky lg:bg-background top-0 z-[9] items-center px-4 md:px-6 font-jost justify-between">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="z-[999] lg:hidden">
@@ -93,7 +92,8 @@ export default function Navigation() {
             <Input className="rounded-lg px-4 shadow-lg min-w-[300px]" type="search" name="search" id="search" placeholder="search" />
             <Search className="absolute right-2 top-1/2 text-muted-foreground -translate-y-1/2 " />
           </div>
-          <ShoppingBag className="mx-3 cursor-pointer"/>
+          {/* <ShoppingBag className="mx-3 cursor-pointer"/> */}
+          <CartIcon/>
           {isLoaded ? (
             isSignedIn ? (
               <div className="flex px-3">

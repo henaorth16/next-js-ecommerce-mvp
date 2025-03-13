@@ -51,7 +51,7 @@ function SliderClient({ products }: SliderClientProps) {
     <div className="slider-container w-[94%] mx-auto px-4">
       <Slider ref={(slider: any) => (sliderRef = slider)} {...settings}>
         {products.map((product) => (
-          <div key={product.id} className="p-4 mr-36 h-full">
+          <div key={product.id} className="p-4 mr-36 min-w-[18rem] h-full">
             <ProductCard
               id={product.id}
               name={product.name}

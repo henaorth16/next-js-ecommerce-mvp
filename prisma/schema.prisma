@@ -1,54 +1,73 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
 }
 
+// Define the database connection
 datasource db {
-  provider = "postgresql"
-  url      = env("SUPABASE_DATABASE_URL")
+  provider = "postgresql" // Use PostgreSQL as the database provider
+  url      = env("SUPABASE_DATABASE_URL") // Connection URL from environment variable
 }
 
+// Define the Product model
 model Product {
-  id                     String                 @id @default(uuid())
-  name                   String
-  priceInCents           Int
-  imagePath              String
-  description            String
-  isAvailableForPurchase Boolean                @default(true)
-  createdAt              DateTime               @default(now())
-  updatedAt              DateTime               @updatedAt
-  orders                 Order[]
-  downloadVerifications  DownloadVerification[]
+  id                     String                 @id @default(uuid()) // Unique ID with UUID default
+  name                   String                 // Product name
+  priceInCents           Int                    // Price in cents (to avoid floating-point inaccuracies)
+  imagePath              String                 // Path to the product image
+  description            String                 // Product description
+  isAvailableForPurchase Boolean                @default(true) // Availability flag, defaults to true
+  createdAt              DateTime               @default(now()) // Timestamp for creation
+  updatedAt              DateTime               @updatedAt // Timestamp for last update
+  orders                 OrderItem[]            // Relationship to OrderItem model
+  downloadVerifications  DownloadVerification[] // Relationship to DownloadVerification model
 }
 
+// Define the User model
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid()) // Unique ID with UUID default
+  email     String   @unique // Unique email for each user
+  createdAt DateTime @default(now()) // Timestamp for creation
+  updatedAt DateTime @updatedAt // Timestamp for last update
 }
 
+// Define the Order model
 model Order {
-  id               String  @id @default(uuid())
-  first_name       String
-  last_name        String
-  email            String
-  phone            String
-  currency         String
-  reference        String
-  tx_ref           String 
-  productId        String
-  product          Product @relation(fields: [productId], references: [id], onDelete: Restrict)
-  pricePaidInCents Int
-  createdAt        DateTime @default(now())
+  id            String      @id @default(uuid()) // Unique ID with UUID default
+  txRef         String      @unique // Unique transaction reference
+  status        String      // Order status: "PENDING", "PAID", "FAILED", "DELIVERED"
+  transactionId String?     // Optional transaction ID
+  amount        Float       // Total order amount
+  customerEmail String      // Customer's email
+  customerName  String      // Customer's name
+  customerPhone String?     // Optional customer phone number
+  items         OrderItem[] // Relationship to OrderItem model
+  createdAt     DateTime    @default(now()) // Timestamp for creation
+  updatedAt     DateTime    @updatedAt // Timestamp for last update
 }
 
+// Define the OrderItem model
+model OrderItem {
+  id        String   @id @default(cuid()) // Unique ID with cuid() default
+  productId String   // Foreign key to Product
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade) // Relationship to Product
+  name      String   // Name of the product at the time of purchase
+  price     Float    // Price of the product at the time of purchase
+  quantity  Int      // Quantity of the product
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade) // Relationship to Order
+  orderId   String   // Foreign key to Order
+
+  @@index([orderId]) // Index on orderId for faster queries
+  @@index([productId]) // Index on productId for faster queries
+}
+
+// Define the DownloadVerification model
 model DownloadVerification {
-  id        String   @id @default(uuid())
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-  productId String
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        String   @id @default(uuid()) // Unique ID with UUID default
+  expiresAt DateTime // Expiration timestamp for the download link
+  createdAt DateTime @default(now()) // Timestamp for creation
+  productId String   // Foreign key to Product
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade) // Relationship to Product
+
+  @@index([productId]) // Index on productId for faster queries
 }

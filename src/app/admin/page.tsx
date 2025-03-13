@@ -10,12 +10,12 @@ import { formatCurrency, formatNumber } from "@/lib/formatters"
 
 async function getSalesData() {
   const data = await db.order.aggregate({
-    _sum: { pricePaidInCents: true },
+    _sum: { amount: true },
     _count: true,
   })
 
   return {
-    amount: (data._sum.pricePaidInCents || 0) / 100,
+    amount: (data._sum.amount || 0) / 100,
     numberOfSales: data._count,
   }
 }
@@ -24,7 +24,7 @@ async function getUserData() {
   const [userCount, orderData] = await Promise.all([
     db.user.count(),
     db.order.aggregate({
-      _sum: { pricePaidInCents: true },
+      _sum: { amount: true },
     }),
   ])
 
@@ -33,7 +33,7 @@ async function getUserData() {
     averageValuePerUser:
       userCount === 0
         ? 0
-        : (orderData._sum.pricePaidInCents || 0) / userCount / 100,
+        : (orderData._sum.amount || 0) / userCount / 100,
   }
 }
 
@@ -58,7 +58,8 @@ export default async function AdminDashboard() {
       <DashboardCard
         title="Orders"
         subtitle={`${formatNumber(salesData.numberOfSales)} Orders`}
-        body={formatCurrency(salesData.amount)}
+        body={formatCurrency(salesData.amount * 100)}
+        clr="hsl(9, 100%, 67%)"
       />
       <DashboardCard
         title="Customers"
@@ -66,11 +67,13 @@ export default async function AdminDashboard() {
           userData.averageValuePerUser
         )} Average Value`}
         body={formatNumber(userData.userCount)}
+        clr="hsl(109, 100%, 67%)"
       />
       <DashboardCard
         title="Active Products"
         subtitle={`${formatNumber(productData.inactiveCount)} Inactive`}
         body={formatNumber(productData.activeCount)}
+        clr="hsl(209, 100%, 67%)"
       />
     </div>
   )
@@ -80,11 +83,14 @@ type DashboardCardProps = {
   title: string
   subtitle: string
   body: string
+  clr: string
 }
 
-function DashboardCard({ title, subtitle, body }: DashboardCardProps) {
+function DashboardCard({ title, subtitle, body, clr }: DashboardCardProps) {
   return (
-    <Card>
+    <Card style={{
+      backgroundColor: clr,
+    }}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{subtitle}</CardDescription>
