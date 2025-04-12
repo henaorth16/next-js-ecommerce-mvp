@@ -15,7 +15,7 @@ export default function Hero() {
     }, []);
 
     return (
-      <section className="overflow-hidden h-[75vh] w-full bg-[linear-gradient(176deg,_var(--back-clr)_30%,_var(--orange-clr))] z-0 pl-12">
+      <section className="overflow-hidden h-[75vh] w-full bg-[linear-gradient(176deg,_var(--back-clr)_30%,_var(--orange-clr))] z-0 pl-5 md:pl-12">
          <main className=' flex justify-around w-full h-full overflow-y-hidden'>
             <h1 className='absolute text-[19rem] -bottom-16 text-backClr z-[-1] left-24'>01</h1>
             <div className='flex flex-col z-10 overflow-hidden '>
