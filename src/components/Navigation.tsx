@@ -11,6 +11,7 @@ import { Input } from "./ui/input"
 import { useAuth } from "@clerk/nextjs"
 import { useClerk } from "@clerk/nextjs"
 import { CartIcon } from "./CartIcon"
+import { AddToCartButton } from "./AddToCartButton"
 
 
 const links = [
@@ -40,13 +41,16 @@ export default function Navigation() {
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="z-[999] lg:hidden">
-            <MenuIcon className="h-6 w-6" />
+            <MenuIcon className="h-6 w-6 fixed" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
         
         <div className="ml-8 absolute left-6 lg:hidden">
           <Logo/>
+          </div>
+          <div className="ml-8 absolute right-8 lg:hidden">
+          <CartIcon/>
           </div>
         <SheetContent side="left">
           {/* {logo */}

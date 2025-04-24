@@ -1,5 +1,5 @@
-
-import React from "react"
+"use client"
+import React,{useEffect, useState} from "react"
 import db from "@/db/db"
 import { formatCurrency } from "@/lib/formatters"
 import { Button } from "@/components/ui/button"
@@ -8,23 +8,20 @@ import Image from "next/image"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import CardBtn from "@/components/cardButton"
+import { useCartStore } from "@/lib/useCartStore"
 
-export default async function page({ params: { id } }: { params: { id: string } }) {
-  // const id = "65378675"
-  const product = await db.product.findUnique({
-    where: {
-      id: id,
-    },
-    select: {
-      id: true,
-      name: true,
-      priceInCents: true,
-      imagePath: true,
-      description: true,
-      isAvailableForPurchase: true,
-    },
+export default function page({ params: { id } }: { params: { id: string } }) {
+  const [product, setProduct] = useState<any>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`/api/product/${id}`)
+      const data = await res.json()
+      setProduct(data)
+    }
+    fetchData()
   })
-
+  const addToCart = useCartStore((state) => state.addToCart)
   if (!product) return <p>No Related product found</p>
 
   // const product = await db.product.findUnique({ where: { id } })
@@ -71,9 +68,9 @@ export default async function page({ params: { id } }: { params: { id: string } 
 
 
           <p>{product?.description} and other lorum kind of Lorem ipsum asperiores vel. Cumque, maiores dolore? Ipsa officia dolore perferendis obcaecati. Facere ad eius libero at aspernatur et laudantium quo velit inventore excepturi neque ullam reprehenderit architecto, ex obcaecati! Minus placeat ipsam optio earum amet quis perspiciatis rerum ducimus odit, laborum saepe. quam sunt laudantium ducimus vitae fuga atque.</p>
-          <CardBtn link={`/products/${id}/checkout`} className="w-full text-white mt-6">
-            Purchase Now
-          </CardBtn>
+          <Button onClick={()=> addToCart({id:product.id,name:product.name,price:product.priceInCents/ 100})} className="w-full text-white mt-6">
+            Add to Cart
+          </Button>
         </div>
       </div>
       {/* <Recomended /> */}
