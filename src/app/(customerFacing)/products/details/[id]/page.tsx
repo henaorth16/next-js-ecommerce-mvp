@@ -1,16 +1,13 @@
 "use client"
-import React,{useEffect, useState} from "react"
-import db from "@/db/db"
+import {useEffect, useState} from "react"
 import { formatCurrency } from "@/lib/formatters"
 import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import Image from "next/image"
-import Link from "next/link"
 import { Input } from "@/components/ui/input"
-import CardBtn from "@/components/cardButton"
 import { useCartStore } from "@/lib/useCartStore"
 
-export default function page({ params: { id } }: { params: { id: string } }) {
+export default function Page({ params: { id } }: { params: { id: string } }) {
   const [product, setProduct] = useState<any>(null)
 
   useEffect(() => {
