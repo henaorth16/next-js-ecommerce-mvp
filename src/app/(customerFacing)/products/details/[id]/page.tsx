@@ -94,8 +94,7 @@ export default function ProductPage({ params: { id } }: { params: { id: string }
             addToCart({
               id: product.id,
               name: product.name,
-              price: product.priceInCents / 100,
-              quantity: quantity,
+              price: product.priceInCents / 100
             })
           }
           className="w-full text-white mt-6"
