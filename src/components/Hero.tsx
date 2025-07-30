@@ -1,33 +1,55 @@
-"use client"
-import React, {useState, useEffect, useRef} from 'react'
-import { ButtonOutLine } from './Logo';
-import heroImg from "../../public/asset/heroimg.png"
-import Image from 'next/image';
+"use client";
 
-export default function Hero() {
-   const [top, setTop] = useState(0)
- 
-   useEffect(() => {
-      window.addEventListener("scroll", () => setTop(window.scrollY));
-        return () => {
-        window.removeEventListener("scroll",  () => setTop(window.scrollY));
-      };
-    }, []);
+import React from "react";
+import Slider from "react-slick";
+import Image from "next/image";
+import { ButtonOutLine } from "./Logo";
 
-    return (
-      <section className="overflow-hidden h-[75vh] w-full bg-[linear-gradient(176deg,_var(--back-clr)_30%,_var(--orange-clr))] z-0 pl-5 md:pl-12">
-         <main className=' flex justify-around w-full h-full overflow-y-hidden'>
-            <h1 className='absolute text-[19rem] -bottom-16 text-backClr z-[-1] left-24'>01</h1>
-            <div className='flex flex-col z-10 overflow-hidden '>
-              <div className="p-3 shadow-[-12px_0px_0_var(--blue-clr)] m-3 mb-16">sol habesha cloth dustrubuter and designs <br/><span className='font-semibold'>{new Date().getFullYear()}</span></div>
-              <h1 className="mainqoute text-5xl md:text-7xl text-blueClr font-amharic">“በውኃ ይለቅ”</h1>
+const images = [
+  "https://res.cloudinary.com/dhyfvvz23/image/upload/v1753916393/jpeg_hr0tjx.jpg",
+  "https://res.cloudinary.com/dhyfvvz23/image/upload/v1753916379/Shewa_Amhara_zrlzdv.jpg",
+  "https://res.cloudinary.com/dhyfvvz23/image/upload/v1753916679/Traditional_Wedding_Cloth_hpab9h.jpg",
+]
+const HeroSlider = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    speed: 600,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    fade: true,
+    pauseOnHover: false,
+  };
+
+  return (
+    <section className="relative w-full h-screen overflow-hidden">
+      <Slider {...settings}>
+        {images.map((src, index) => (
+          <div key={index} className="w-full h-screen relative">
+            <Image
+              src={src}
+              alt={`Slide ${index + 1}`}
+              fill
+              className="object-cover"
+              style={{ objectPosition: "50% 20%" }}
+              priority
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-50" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+              <h1 className="mainqoute text-5xl md:text-7xl text-white font-amharic">“በውኃ ይለቅ”</h1>
               <div className='ml-4'>
-                 <p className='max-w-md my-4 text-lg font-amharic text-blueClr font-600'>ለጅምላና ልዩ ትእዛዝ የምትፈልጉ ይዘዙን በፍጥነት እናደርሳለን።</p>
-                 <ButtonOutLine text="Shop now"/>
+                 <p className='max-w-md my-4 md:text-lg text-center font-amharic text-white font-600'>ለጅምላና ልዩ ትእዛዝ የምትፈልጉ ይዘዙን በፍጥነት እናደርሳለን።</p>
+                 
               </div>
             </div>
-            <Image className='w-[200px] md:w-[300px] object-cover z-100 bg-transparent' src={heroImg}  alt="background image of carousel" />
-         </main>
-      </section>
-    )
-}
+          </div>
+        ))}
+      </Slider>
+    </section>
+  );
+};
+
+export default HeroSlider;
