@@ -1,12 +1,20 @@
 import { Nav, NavLink } from "@/components/Nav"
+import { currentUser } from "@clerk/nextjs/server";
+import { notFound, redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic"
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
 
+ const user = await currentUser();
+    if (!user || user.emailAddresses[0]?.emailAddress !== "emyayehenok@gmail.com") {
+      return notFound();
+    }
+ 
+  
   return (
     <>
     <section className="w-[90%] mx-auto">

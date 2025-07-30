@@ -40,7 +40,8 @@ const storage: PersistStorage<CartStore> = {
 
 export const useCartStore = create<CartStore>()(
   persist(
-    (set, get) => ({
+    (set, get) => {
+      return {
       cart: [],
       addToCart: (item) =>
         set((state) => {
@@ -56,7 +57,7 @@ export const useCartStore = create<CartStore>()(
       clearCart: () => set({ cart: [] }),
       getTotalItems: () => get().cart.reduce((sum, item) => sum + item.quantity, 0),
       getTotalPrice: () => get().cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
-    }),
+    }},
     {
       name: 'cart-storage',
       storage,

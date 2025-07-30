@@ -14,6 +14,7 @@ import Image from "next/image"
 import { HeartIcon, ShoppingCartIcon } from "lucide-react"
 import { AddToCartButton } from "./AddToCartButton"
 import { useState } from "react"
+import { useCartStore } from "@/lib/useCartStore"
 type ProductCardProps = {
   id: string
   name: string
@@ -27,6 +28,8 @@ export function ProductCard({
   priceInCents,
   imagePath,
 }: ProductCardProps) {
+  const isAdded = useCartStore((state) => state.cart.map(item => item.id === id).includes(true))
+  console.log("is added", isAdded)
   const [liked, setLiked] = useState(false)
   return (
     <div className="flex flex-col mx-5 my-5 md:my-0 md:mx-3 h-auto md:max-w-[22rem] group">
@@ -59,7 +62,7 @@ export function ProductCard({
         {/* <ShoppingCartIcon
           className="absolute -top-7 right-0 translate-x-1/4 z-[900] text-white cursor-pointer size-9 bg-orangeClr p-2 rounded-lg hover:scale-105 shadow-lg"
         /> */}
-        <AddToCartButton product={{id, name, price: priceInCents/100 }} />
+        <AddToCartButton product={{id, name, price: priceInCents/100}} isAdded={isAdded} />
         <p className="text-sm sm:text-md text-primary font-medium">
           {formatCurrency(priceInCents / 100)}
         </p>

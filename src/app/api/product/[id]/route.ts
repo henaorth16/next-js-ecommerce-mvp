@@ -14,7 +14,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 
   try {
     // Fetch the product from the database using Prisma
-    const product = await db.product.findUnique({
+    const product = await db.product.findFirst({
       where: { id },
       select: {
         id: true,

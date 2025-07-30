@@ -94,7 +94,7 @@ export default function SuccessPage({ params: { id } }: { params: { id: string }
           <p>Your order was successful. Thank you, {username}!</p>
           <Button variant="ghost"  onClick={() => router.push("/")} className="mt-4 text-orangeClr">
             Continue Shopping
-            </Button>
+          </Button>
         </div>
       )}
     </div>
