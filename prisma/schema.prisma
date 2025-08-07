@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,14 +11,15 @@ datasource db {
 // Define the Product model
 model Product {
   id                     String                 @id @default(uuid()) // Unique ID with UUID default
-  name                   String                 // Product name
-  priceInCents           Int                    // Price in cents (to avoid floating-point inaccuracies)
-  imagePath              String                 // Path to the product image
-  description            String                 // Product description
+  name                   String // Product name
+  priceInCents           Int // Price in cents (to avoid floating-point inaccuracies)
+  imagePath              String // Path to the product image
+  description            String // Product description
   isAvailableForPurchase Boolean                @default(true) // Availability flag, defaults to true
   createdAt              DateTime               @default(now()) // Timestamp for creation
   updatedAt              DateTime               @updatedAt // Timestamp for last update
-  orders                 OrderItem[]            // Relationship to OrderItem model
+  orders                 OrderItem[]
+  isForMerchant          Boolean                @default(false) // check if product is for merchant
   downloadVerifications  DownloadVerification[] // Relationship to DownloadVerification model
 }
 
@@ -35,12 +35,12 @@ model User {
 model Order {
   id            String      @id @default(uuid()) // Unique ID with UUID default
   txRef         String      @unique // Unique transaction reference
-  status        String      // Order status: "PENDING", "PAID", "FAILED", "DELIVERED"
-  transactionId String?     // Optional transaction ID
-  amount        Float       // Total order amount
-  customerEmail String      // Customer's email
-  customerName  String      // Customer's name
-  customerPhone String?     // Optional customer phone number
+  status        String // Order status: "PENDING", "PAID", "FAILED", "DELIVERED"
+  transactionId String? // Optional transaction ID
+  amount        Float // Total order amount
+  customerEmail String // Customer's email
+  customerName  String // Customer's name
+  customerPhone String? // Optional customer phone number
   items         OrderItem[] // Relationship to OrderItem model
   createdAt     DateTime    @default(now()) // Timestamp for creation
   updatedAt     DateTime    @updatedAt // Timestamp for last update
@@ -48,14 +48,14 @@ model Order {
 
 // Define the OrderItem model
 model OrderItem {
-  id        String   @id @default(cuid()) // Unique ID with cuid() default
-  productId String   // Foreign key to Product
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade) // Relationship to Product
-  name      String   // Name of the product at the time of purchase
-  price     Float    // Price of the product at the time of purchase
-  quantity  Int      // Quantity of the product
-  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade) // Relationship to Order
-  orderId   String   // Foreign key to Order
+  id        String  @id @default(cuid()) // Unique ID with cuid() default
+  productId String // Foreign key to Product
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade) // Relationship to Product
+  name      String // Name of the product at the time of purchase
+  price     Float // Price of the product at the time of purchase
+  quantity  Int // Quantity of the product
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade) // Relationship to Order
+  orderId   String // Foreign key to Order
 
   @@index([orderId]) // Index on orderId for faster queries
   @@index([productId]) // Index on productId for faster queries
@@ -66,7 +66,7 @@ model DownloadVerification {
   id        String   @id @default(uuid()) // Unique ID with UUID default
   expiresAt DateTime // Expiration timestamp for the download link
   createdAt DateTime @default(now()) // Timestamp for creation
-  productId String   // Foreign key to Product
+  productId String // Foreign key to Product
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade) // Relationship to Product
 
   @@index([productId]) // Index on productId for faster queries

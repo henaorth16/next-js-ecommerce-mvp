@@ -44,6 +44,7 @@ async function ProductsTable() {
       id: true,
       name: true,
       priceInCents: true,
+      isForMerchant: true,
       isAvailableForPurchase: true,
       _count: { select: { orders: true } },
     },
@@ -62,6 +63,7 @@ async function ProductsTable() {
           <TableHead>Name</TableHead>
           <TableHead>Price</TableHead>
           <TableHead>Orders</TableHead>
+          <TableHead>Type</TableHead>
           <TableHead className="w-0">
             <span className="sr-only">Actions</span>
           </TableHead>
@@ -86,6 +88,7 @@ async function ProductsTable() {
             <TableCell>{product.name}</TableCell>
             <TableCell>{formatCurrency(product.priceInCents / 100)}</TableCell>
             <TableCell>{formatNumber(product._count.orders)}</TableCell>
+            <TableCell>{product.isForMerchant ? "Merchant" : "Normal"}</TableCell>
             <TableCell>
               <DropdownMenu>
                 <DropdownMenuTrigger>

@@ -28,6 +28,10 @@ const links = [
     link: "/orders"
   },
   {
+    title: "MERCHANTS",
+    link: "/merchant"
+  },
+  {
     title: "CONTACT",
     link: "/contact"
   },
@@ -37,7 +41,7 @@ export default function Navigation() {
   const { isSignedIn, user, isLoaded, } = useUser()
   const pathname = usePathname()
   return (
-    <header className="flex h-20 w-full shrink-0 lg:bg-background top-0 z-[9] items-center px-4 md:px-6 font-jost justify-between">
+    <header className="flex h-20 sticky w-full bg-background top-0 z-[9] items-center px-4 md:px-6 font-jost justify-between">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="z-[999] fixed lg:hidden">

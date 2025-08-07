@@ -114,7 +114,7 @@ export default function ProductPage({
 
         {product.description && (
           <p className="text-sm text-muted-foreground mb-6">
-            {product.description.slice(0,150)}
+            {product.description}
           </p>
         )}
 

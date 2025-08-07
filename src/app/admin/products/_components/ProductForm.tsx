@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { Checkbox } from "@/components/ui/checkbox"
 import { formatCurrency } from "@/lib/formatters"
 import { useState } from "react"
 import { addProduct, updateProduct } from "../../_actions/products"
@@ -19,6 +20,9 @@ export function ProductForm({ product }: { product?: Product | null }) {
   const [priceInCents, setPriceInCents] = useState<number | undefined>(
     product?.priceInCents
   )
+  const [isForMerchant, setIsForMerchant] = useState<boolean>(
+    product?.isForMerchant ?? false
+  );
 
   return (
     <form action={action} className="space-y-8 w-[85%] mx-auto">
@@ -74,6 +78,15 @@ export function ProductForm({ product }: { product?: Product | null }) {
           />
         )}
         {error.image && <div className="text-destructive">{error.image}</div>}
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id="isForMerchant"
+          name="isForMerchant"
+          checked={isForMerchant}
+          onCheckedChange={(checked) => setIsForMerchant(Boolean(checked))}
+        />
+        <Label htmlFor="isForMerchant">Is for Merchant?</Label>
       </div>
       <SubmitButton />
     </form>

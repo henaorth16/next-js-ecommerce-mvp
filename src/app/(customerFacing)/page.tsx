@@ -13,7 +13,9 @@ import SliderComponent from "@/components/Slider";
 const getMostPopularProducts = cache(
   () => {
     return db.product.findMany({
-      where: { isAvailableForPurchase: true },
+      where: { isAvailableForPurchase: true,
+        isForMerchant: false, // Ensure we only fetch products not meant for merchants  
+       },
       orderBy: { orders: { _count: "desc" } },
       take: 6,
     })
@@ -24,7 +26,9 @@ const getMostPopularProducts = cache(
 
 const getNewestProducts = cache(() => {
   return db.product.findMany({
-    where: { isAvailableForPurchase: true },
+    where: { isAvailableForPurchase: true,
+      isForMerchant: false, // Ensure we only fetch products not meant for merchants
+     },
     orderBy: { createdAt: "desc" },
     take: 4,
   })

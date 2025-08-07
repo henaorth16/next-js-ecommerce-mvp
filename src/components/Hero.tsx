@@ -25,7 +25,7 @@ const HeroSlider = () => {
   };
 
   return (
-    <section className="relative w-full h-screen overflow-hidden">
+    <section className="w-full h-screen ">
       <Slider {...settings}>
         {images.map((src, index) => (
           <div key={index} className="w-full h-screen relative">

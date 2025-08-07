@@ -1,22 +1,18 @@
+import { auth } from "@clerk/nextjs/server";
+import { notFound } from "next/navigation";
 import { Nav, NavLink } from "@/components/Nav"
 import { currentUser } from "@clerk/nextjs/server";
-import { notFound, redirect } from "next/navigation";
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const { userId } = auth();
 
-export const dynamic = "force-dynamic"
-export default async function AdminLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+  if (!userId) return notFound();
 
- const user = await currentUser();
-    if (!user || user.emailAddresses[0]?.emailAddress !== "emyayehenok@gmail.com") {
-      return notFound();
-    }
- 
-  
+
+  // if (user?.emailAddresses[0]?.emailAddress !== "emyayehenok@gmail.com") {
+  //   return notFound();
+  // }
+
   return (
-    <>
     <section className="w-[90%] mx-auto">
       <Nav>
         <NavLink href="/admin">Dashboard</NavLink>
@@ -26,6 +22,5 @@ export default async function AdminLayout({
       </Nav>
       <div className="container my-6">{children}</div>
     </section>
-    </>
-  )
+  );
 }

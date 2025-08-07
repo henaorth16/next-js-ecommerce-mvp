@@ -1,5 +1,5 @@
-import { Product } from '@prisma/client';
 "use server";
+import { Product } from "@prisma/client";
 
 import db from "@/db/db";
 import { string, z } from "zod";
@@ -8,7 +8,7 @@ import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import cloudinary from "@/lib/cloudinary";
 
-function uploadToCloudinary(fileBuffer: Buffer, publicId: string):unknown {
+function uploadToCloudinary(fileBuffer: Buffer, publicId: string): unknown {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
@@ -39,26 +39,33 @@ const addSchema = z.object({
   description: z.string().min(1),
   priceInCents: z.coerce.number().int().min(1),
   // file: fileSchema.refine((file) => file.size > 0, "Required"),
+  isForMerchant: z.boolean().default(false), // New field for merchant products
   image: imageSchema.refine((file) => file.size > 0, "Required"),
 });
 
 export async function addProduct(prevState: unknown, formData: FormData) {
-  const result = addSchema.safeParse(Object.fromEntries(formData.entries()))
+  const rawData = Object.fromEntries(formData.entries());
+  const result = addSchema.safeParse({
+    ...rawData,
+    isForMerchant: rawData.isForMerchant === "on", // convert checkbox value to boolean
+    priceInCents: Number(rawData.priceInCents), // ensure price is a number
+    image: formData.get("image"), // file needs to be reattached
+  });
   if (result.success === false) {
-    return result.error.formErrors.fieldErrors
+    return result.error.formErrors.fieldErrors;
   }
 
-  const data = result.data
+  const data = result.data;
 
   // Upload image to Cloudinary
-  const imageBuffer = Buffer.from(await data.image.arrayBuffer())
-  const publicId = `${crypto.randomUUID()}-${data.image.name}`
-  
+  const imageBuffer = Buffer.from(await data.image.arrayBuffer());
+  const publicId = `${crypto.randomUUID()}-${data.image.name}`;
+
   let imageUploadResult: unknown;
   try {
-    imageUploadResult = await uploadToCloudinary(imageBuffer, publicId)
-  } catch (error:any) {
-    throw new Error(`Image upload error: ${error.message}`)
+    imageUploadResult = await uploadToCloudinary(imageBuffer, publicId);
+  } catch (error: any) {
+    throw new Error(`Image upload error: ${error.message}`);
   }
 
   const { secure_url } = imageUploadResult as { secure_url: string };
@@ -70,13 +77,14 @@ export async function addProduct(prevState: unknown, formData: FormData) {
       description: data.description,
       priceInCents: data.priceInCents,
       imagePath: secure_url, // Cloudinary image URL
+      isForMerchant: data.isForMerchant,
     },
-  })
+  });
 
-  revalidatePath("/")
-  revalidatePath("/products")
+  revalidatePath("/");
+  revalidatePath("/products");
 
-  redirect("/admin/products")
+  redirect("/admin/products");
 }
 
 const editSchema = addSchema.extend({
@@ -124,6 +132,7 @@ export async function updateProduct(
       priceInCents: data.priceInCents,
       // filePath,
       imagePath,
+      isForMerchant: data.isForMerchant, // Update the isForMerchant field
     },
   });
 

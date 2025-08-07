@@ -18,10 +18,12 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       where: { id },
       select: {
         id: true,
+        name:true,
         priceInCents: true,
         imagePath:true,
-        name:true,
+        description: true,
         isAvailableForPurchase: true,
+        isForMerchant: true,
       },
     });
 

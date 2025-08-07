@@ -19,6 +19,7 @@ type ProductCardProps = {
   id: string
   name: string
   priceInCents: number
+  isForMerchant?: boolean // Optional field for merchant products
   imagePath: string
 }
 
@@ -27,6 +28,7 @@ export function ProductCard({
   name,
   priceInCents,
   imagePath,
+  isForMerchant = false, // Default to false if not provided
 }: ProductCardProps) {
   const isAdded = useCartStore((state) => state.cart.map(item => item.id === id).includes(true))
   console.log("is added", isAdded)
@@ -45,7 +47,13 @@ export function ProductCard({
             alt={name}
           />
         </Link>
-        
+        {
+          isForMerchant && (
+            <span className="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+              Merchant
+            </span>
+          )
+        }
         <HeartIcon
           className={`absolute top-3 right-3 cursor-pointer size-9 text-orangeClr hover:bg-orange-600 hover:bg-opacity-50 p-2 rounded-full`}
           aria-label="Like"
