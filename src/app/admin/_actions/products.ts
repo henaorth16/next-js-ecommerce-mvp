@@ -4,6 +4,7 @@ import { Product } from "@prisma/client";
 import db from "@/db/db";
 import { string, z } from "zod";
 import fs from "fs/promises";
+import path from "path";
 import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import cloudinary from "@/lib/cloudinary";
@@ -97,50 +98,64 @@ export async function updateProduct(
   prevState: unknown,
   formData: FormData
 ) {
-  const result = editSchema.safeParse(Object.fromEntries(formData.entries()));
-  if (result.success === false) {
-    return result.error.formErrors.fieldErrors;
+  // Convert formData to a plain object
+  const rawData = Object.fromEntries(formData.entries());
+
+  // Validate and transform
+  const result = addSchema.safeParse({
+    ...rawData,
+    isForMerchant: rawData.isForMerchant === "on", // checkbox to boolean
+    priceInCents: Number(rawData.priceInCents), // string to number
+    image: formData.get("image"), // file
+  });
+
+  if (!result.success) {
+    return result.error.formErrors.fieldErrors; // return validation errors
   }
 
   const data = result.data;
+
+  // Check if product exists
   const product = await db.product.findUnique({ where: { id } });
+  if (!product) return notFound();
 
-  if (product == null) return notFound();
-
-  // let filePath = product.filePath;
-  // if (data.file != null && data.file.size > 0) {
-  //   await fs.unlink(product.filePath);
-  //   filePath = `products/${crypto.randomUUID()}-${data.file.name}`;
-  //   await fs.writeFile(filePath, Buffer.from(await data.file.arrayBuffer()));
-  // }
-
+  // Keep old image path unless new file is uploaded
   let imagePath = product.imagePath;
-  if (data.image != null && data.image.size > 0) {
-    await fs.unlink(`public${product.imagePath}`);
-    imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`;
-    await fs.writeFile(
-      `public${imagePath}`,
-      Buffer.from(await data.image.arrayBuffer())
-    );
+
+  if (data.image && data.image.size > 0) {
+    // Remove old image (ignore if missing)
+    const oldPath = path.join(process.cwd(), "public", product.imagePath);
+    await fs.unlink(oldPath).catch(() => {});
+
+    // Save new image
+    const fileName = `${crypto.randomUUID()}-${data.image.name}`;
+    imagePath = `/products/${fileName}`;
+    const newPath = path.join(process.cwd(), "public", "products", fileName);
+
+    await fs.mkdir(path.dirname(newPath), { recursive: true });
+    await fs.writeFile(newPath, Buffer.from(await data.image.arrayBuffer()));
   }
 
+  // Update in database
   await db.product.update({
     where: { id },
     data: {
       name: data.name,
       description: data.description,
       priceInCents: data.priceInCents,
-      // filePath,
       imagePath,
-      isForMerchant: data.isForMerchant, // Update the isForMerchant field
+      isForMerchant: data.isForMerchant, // must exist in Prisma schema
     },
   });
 
+  // Revalidate and redirect
   revalidatePath("/");
   revalidatePath("/products");
-
   redirect("/admin/products");
 }
+
+
+
 
 export async function toggleProductAvailability(
   id: string,

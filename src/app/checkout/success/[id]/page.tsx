@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import thankyou from "../../../../../public/asset/thankyou.webp";

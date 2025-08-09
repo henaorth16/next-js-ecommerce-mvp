@@ -3,6 +3,7 @@ import { persist, PersistStorage } from 'zustand/middleware'
 
 type CartItem = {
   id: string
+  imagePath: string // Optional for products without images
   name: string
   price: number
   quantity: number

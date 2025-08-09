@@ -5,22 +5,22 @@ const datas = [
   {
     icon: <HomeIcon  className="sm:mx-0 mx-auto"/>,
     title: "Original products",
-    body: "We provide money back guarantee if the product are not original",
+    body: "We offer a full money-back guarantee if the product is not original.",
   },
   {
     icon: <SmileIcon  className="sm:mx-0 mx-auto"/>,
-    title: "Original products",
-    body: "We provide money back guarantee if the product are not original",
+    title: "Customer satisfaction",
+    body: "Your satisfaction is our priority. If you're not happy with your purchase, we’re here to help.",
   },
   {
     icon: <Wallet  className="sm:mx-0 mx-auto"/>,
-    title: "Original products",
-    body: "We provide money back guarantee if the product are not original",
+    title: "Secure payments",
+    body: "All payments are safe and protected. Shop with confidence.",
   },
   {
     icon: <Truck  className="sm:mx-0 mx-auto"/>,
-    title: "Original products",
-    body: "We provide money back guarantee if the product are not original",
+    title: "Fast Delivery",
+    body: "We deliver your order quickly and reliably, right to your door.",
   },
 ]
 

@@ -25,9 +25,9 @@ type ProductCardProps = {
 
 export function ProductCard({
   id,
+  imagePath,
   name,
   priceInCents,
-  imagePath,
   isForMerchant = false, // Default to false if not provided
 }: ProductCardProps) {
   const isAdded = useCartStore((state) => state.cart.map(item => item.id === id).includes(true))
@@ -70,7 +70,7 @@ export function ProductCard({
         {/* <ShoppingCartIcon
           className="absolute -top-7 right-0 translate-x-1/4 z-[900] text-white cursor-pointer size-9 bg-orangeClr p-2 rounded-lg hover:scale-105 shadow-lg"
         /> */}
-        <AddToCartButton product={{id, name, price: priceInCents/100}} isAdded={isAdded} />
+        <AddToCartButton product={{id, imagePath, name, price: priceInCents/100}} isAdded={isAdded} />
         <p className="text-sm sm:text-md text-primary font-medium">
           {formatCurrency(priceInCents / 100)}
         </p>

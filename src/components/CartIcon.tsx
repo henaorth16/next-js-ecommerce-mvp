@@ -22,7 +22,6 @@ export const CartIcon: React.FC = () => {
          </span>
           )}
         </SheetTrigger>
-        <SheetOverlay className="bg-red-400" />
         {/* Add a custom overlay to dim the background more */}
         <SheetContent className="bg-white relative z-50">
           <Cart />

@@ -66,19 +66,31 @@ export function ProductForm({ product }: { product?: Product | null }) {
           <div className="text-destructive">{error.description}</div>
         )}
       </div>
-      <div className="space-y-2">
-        <Label htmlFor="image">Image</Label>
-        <Input type="file" id="image" name="image" required={product == null} />
-        {product != null && (
-          <Image
-            src={product.imagePath}
-            height="400"
-            width="400"
-            alt="Product Image"
-          />
-        )}
-        {error.image && <div className="text-destructive">{error.image}</div>}
-      </div>
+     <div className="space-y-2">
+  <Label htmlFor="image">Image</Label>
+  <Input
+    type="file"
+    id="image"
+    name="image"
+    // Only require image if creating a new product
+    required={!product} 
+  />
+
+  {product && (
+    <Image
+      src={product.imagePath}
+      height={400}
+      width={400}
+      alt="Product Image"
+      className="rounded-md"
+    />
+  )}
+
+  {error.image && (
+    <div className="text-destructive">{error.image}</div>
+  )}
+</div>
+
       <div className="flex items-center space-x-2">
         <Checkbox
           id="isForMerchant"

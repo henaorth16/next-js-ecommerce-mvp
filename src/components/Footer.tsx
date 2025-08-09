@@ -47,7 +47,7 @@ export default function Footer() {
         <div className="store my-2">
           <Header text='Our store' />
           <ul className='flex flex-col '>
-            <li><a href="#">Merkato - Addis ketema Hintsa</a></li>
+            <li><a href="https://maps.app.goo.gl/DjWhqoFMQrggkeFR9">Merkato - Addis ketema Hintsa</a></li>
             <li><a href="tel:+251911121889">+251911121889</a></li>
             <li><a href="#">+251912606343</a></li>
             <li><a href="#">+251929319660</a></li>

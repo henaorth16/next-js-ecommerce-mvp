@@ -7,7 +7,7 @@ export default async function EditProductPage({
 }: {
   params: { id: string }
 }) {
-  const product = await db.product.findUnique({ where: { id } })
+  const product = await db.product.findFirst({ where: { id } })
 
   return (
     <>

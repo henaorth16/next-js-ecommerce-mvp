@@ -9,6 +9,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { Input } from "@/components/ui/input";
 import { useCartStore } from "@/lib/useCartStore";
+import { AddToCartDetailButton } from "@/components/AddToCartButton";
 
 type Product = {
   id: string;
@@ -26,8 +27,9 @@ export default function ProductPage({
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
 
-  const addToCart = useCartStore((state) => state.addToCart);
-
+  const {cart, addToCart} = useCartStore();
+  // const addToCart = useCartStore((state) => state.addToCart);
+  const isAdded = cart.map(item => item.id === id).includes(true)
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -120,18 +122,7 @@ export default function ProductPage({
 
         <hr className="w-full my-4 bg-black" />
 
-        <Button
-          onClick={() =>
-            addToCart({
-              id: product.id,
-              name: product.name,
-              price: product.priceInCents / 100,
-            })
-          }
-          className="w-full text-white mt-6"
-        >
-          Add to Cart
-        </Button>
+        <AddToCartDetailButton product={{id, imagePath: product.imagePath, name: product.name, price: product.priceInCents/100}} isAdded={isAdded}/>
       </div>
     </div>
   );
