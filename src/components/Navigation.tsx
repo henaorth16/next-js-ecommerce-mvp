@@ -16,6 +16,7 @@ import { useAuth } from "@clerk/nextjs";
 import { useClerk } from "@clerk/nextjs";
 import { CartIcon } from "./CartIcon";
 import { AddToCartButton } from "./AddToCartButton";
+import { useState } from "react";
 
 const links = [
   {
@@ -43,6 +44,16 @@ export default function Navigation() {
   const clerk = useClerk();
   const { isSignedIn, user, isLoaded } = useUser();
   const pathname = usePathname();
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [results, setResults] = useState<string[]>([]);
+
+  const handleSearch = async (value: string) => {
+    setSearchTerm(value);
+
+    const res = await fetch(`/api/product/search?search=${value}`);
+    const data = await res.json();
+    setResults(data);
+  };
   return (
     <header className="flex h-20 sticky w-full bg-background top-0 z-[9] items-center px-4 md:px-6 font-jost justify-between">
       <Sheet>
@@ -95,7 +106,7 @@ export default function Navigation() {
             ))}
         </SheetContent>
       </Sheet>
-      <NavigationMenu className="hidden max-w-full px-12 lg:flex flex-1 justify-between">
+      <NavigationMenu className="hidden max-w-full  lg:flex flex-1 justify-between">
         <div className="flex gap-6">
           <Link
             href="/"
@@ -128,16 +139,26 @@ export default function Navigation() {
 
         {/* //search bar and icons */}
         <div className="flex gap-3 items-center">
-          <div className="search relative">
-            <Input
-              className="rounded-lg px-4 shadow-lg min-w-[300px]"
-              type="search"
-              name="search"
-              id="search"
-              placeholder="search"
-            />
-            <Search className="absolute right-2 top-1/2 text-muted-foreground -translate-y-1/2 " />
-          </div>
+          {pathname.startsWith("/products") && (
+            <div className="search  relative">
+              <input
+                type="text"
+                placeholder="Search items..."
+                value={searchTerm}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="relative rounded-lg px-4 shadow-lg h-8 min-w-[300px]"
+              />
+
+              <ul className="space-y-2">
+                {results.map((item) => (
+                  <li key={item.id} className="p-2 border rounded">
+                    {item.name}
+                  </li>
+                ))}
+              </ul>
+              <Search className="absolute right-2 top-1/2 text-muted-foreground -translate-y-1/2 " />
+            </div>
+          )}
           {/* <ShoppingBag className="mx-3 cursor-pointer"/> */}
           <CartIcon />
           {isLoaded &&

@@ -3,7 +3,6 @@
 import React from "react";
 import Slider from "react-slick";
 import Image from "next/image";
-import { ButtonOutLine } from "./Logo";
 
 const images = [
   "https://res.cloudinary.com/dhyfvvz23/image/upload/v1753916393/jpeg_hr0tjx.jpg",
@@ -28,7 +27,7 @@ const HeroSlider = () => {
     <section className="w-full h-screen ">
       <Slider {...settings}>
         {images.map((src, index) => (
-          <div key={index} className="w-full h-screen relative">
+          <div key={index} className="w-full h-[75vh] relative">
             <Image
               src={src}
               alt={`Slide ${index + 1}`}

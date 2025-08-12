@@ -1,7 +1,7 @@
 import type React from "react";
 import { useCartStore } from "@/lib/useCartStore";
 import { Button } from "@/components/ui/button";
-import { Check, ShoppingCartIcon } from "lucide-react";
+import { Check, Minus, Plus, ShoppingCartIcon } from "lucide-react";
 
 type AddToCartButtonProps = {
   product: {
@@ -18,18 +18,41 @@ export const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   isAdded,
 }) => {
   const addToCart = useCartStore((state) => state.addToCart);
+  const increaseQuantity = useCartStore((state) => state.increaseQuantity);
+  const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
+  const cartItem = useCartStore((state) =>
+    state.cart.find((item) => item.id === product.id)
+  );
+
+  if (isAdded && cartItem) {
+    return (
+      <div className="absolute -right-4 -top-6 bg-slate-100 gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => decreaseQuantity(product.id)}
+        >
+          <Minus size={16} />
+        </Button>
+        <span className="text-sm font-medium p-3">{cartItem.quantity}</span>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => increaseQuantity(product.id)}
+        >
+          <Plus size={16} />
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <Button
-      title={isAdded ? "Already added to cart" : "Add to cart"}
-      className={`absolute -right-4 -top-6 ${
-        isAdded ? "bg-muted-foreground" : "bg-orangeClr hover:bg-orange-600"
-      } z-10  transition-colors duration-300`}
-      onClick={() => {
-        addToCart(product);
-      }}
+      title="Add to cart"
+      className="absolute -right-4 -top-6 bg-orangeClr hover:bg-orange-600 transition-colors duration-300"
+      onClick={() => addToCart(product)}
     >
-      {isAdded ? <Check /> : <ShoppingCartIcon />}
+      <ShoppingCartIcon />
     </Button>
   );
 };

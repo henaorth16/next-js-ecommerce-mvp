@@ -6,8 +6,13 @@ import { Suspense } from "react"
 const getProducts = cache(() => {
   return db.product.findMany({
     where: { 
-      isForMerchant: false,  // Ensure we only fetch products not meant for merchants
       isAvailableForPurchase: true
+     },
+     select: {
+      id: true,
+      name: true,
+      priceInCents: true,
+      imagePath: true,
      },
     orderBy: { name: "asc" },
   })
@@ -40,5 +45,5 @@ export default function ProductsPage() {
 async function ProductsSuspense() {
   const products = await getProducts()
 
-  return products.map(product => !product.isForMerchant && <ProductCard key={product.id} {...product} />)
+  return products.map(product => <ProductCard key={product.id} {...product} />)
 }

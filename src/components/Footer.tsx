@@ -5,8 +5,14 @@ import React from 'react'
 import Logo from './Logo'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
+import { useToast } from './hooks/use-toast'
+
 
 export default function Footer() {
+  // add shadcn toast to copy link
+  const { toast } = useToast();
+  
+
   return (
     <footer className='bg-primary text-background w-full  gap-5 p-8 md:px-16 sm:px-9 '>
       <section className='sm:flex mx-auto gap-4 sm:gap-1 md:flex-wrap  justify-around w-full'>
@@ -39,7 +45,7 @@ export default function Footer() {
           <Header text="Quick link" />
           <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#">Products</a></li>
+            <li><a href="/product">Products</a></li>
             <li><a href="#">Gallery</a></li>
             <li><a href="#">Contact</a></li>
           </ul>
@@ -70,7 +76,10 @@ export default function Footer() {
           <li className='cursor-pointer' onClick={async() => {
              try {
               await navigator.clipboard.writeText(process.env.NEXT_PUBLIC_BASE_URL as string);
-              alert('you Copied a link');
+              toast({
+                title: 'Link copied to clipboard',
+                description: 'You can now share the link with others.',
+              });
             } catch (err) {
               console.error('Failed to copy: ', err);
             }
@@ -78,7 +87,7 @@ export default function Footer() {
         </ul>
       </div>
       <hr className='w-full my-2' />
-      <p className='text-center text-muted-foreground'>© 2024 elites dev group, LTD - All Rights Reserved</p>
+      <p className='text-center text-muted-foreground'>© 2025 <a className='underline hover:text-blue-700' href="https://henok-em.netlify.app" target='_blank'>Henaorth</a>, - All Rights Reserved</p>
     </footer>
   )
 }
