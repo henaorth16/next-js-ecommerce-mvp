@@ -150,11 +150,11 @@ export default function Navigation() {
               />
 
               <ul className="space-y-2">
-                {results.map((item) => (
+                {/* {results.map((item) => (
                   <li key={item.id} className="p-2 border rounded">
                     {item.name}
                   </li>
-                ))}
+                ))} */}
               </ul>
               <Search className="absolute right-2 top-1/2 text-muted-foreground -translate-y-1/2 " />
             </div>
