@@ -22,6 +22,7 @@ export default function ContactForm() {
                 type="email"
                 placeholder="Enter your email"
                 className="p-2 border border-gray-300 rounded"
+                required
               />
               <label className="text-gray-800 font-semibold pt-3">
                 Message
