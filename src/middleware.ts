@@ -6,7 +6,8 @@ const isPublicRoute = createRouteMatcher([
   '/',
   '/products/details(.*)',
   '/products',
-  '/merchant'
+  '/merchant',
+  '/contact'
 ]);
 
 // Allowed Clerk User IDs

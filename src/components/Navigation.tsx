@@ -149,13 +149,13 @@ export default function Navigation() {
                 className="relative rounded-lg px-4 shadow-lg h-8 min-w-[300px]"
               />
 
-              <ul className="space-y-2">
-                {/* {results.map((item) => (
+              {/* <ul className="space-y-2">
+               {results.map((item) => (
                   <li key={item.id} className="p-2 border rounded">
                     {item.name}
                   </li>
-                ))} */}
-              </ul>
+                ))} 
+              </ul> */}
               <Search className="absolute right-2 top-1/2 text-muted-foreground -translate-y-1/2 " />
             </div>
           )}
